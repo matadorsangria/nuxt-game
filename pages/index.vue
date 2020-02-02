@@ -1,17 +1,21 @@
 <template>
-  <div>
+  <div v-if="isAuth">
     <div class="stage">
       <board></board>
       <people></people>
     </div>
-    <div class="overlay default">
+    <div class="overlay default" ref="defaultOverlay">
       <div>
         <p>
-          <startButton level="easy"></startButton>
-          <startButton level="normal"></startButton>
-          <startButton level="hard"></startButton>
+          <startButton
+            v-for="level in levels"
+            :key="level"
+            :level="level"
+            @defaultOverlayHide="defaultOverlayHide"
+          ></startButton>
         </p>
         <p>※音が出ますのでご注意ください</p>
+        <signOutButton></signOutButton>
       </div>
     </div>
     <div class="overlay restart">
@@ -22,23 +26,48 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <div id="firebaseui-auth-container"></div>
+  </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import 'firebaseui-ja/dist/firebaseui.css';
 import Board from '~/components/Board.vue'
 import People from '~/components/People.vue'
 import StartButton from '~/components/StartButton.vue'
 import RestartButton from '~/components/RestartButton.vue'
+import SignOutButton from '~/components/SignOutButton.vue'
 
 export default {
   components: {
     'board': Board,
     'people': People,
     'startButton': StartButton,
-    'restartButton': RestartButton
+    'restartButton': RestartButton,
+    'signOutButton': SignOutButton
   },
-  created: function(){
-    this.$store.dispatch('setBoard');
+  data: () => ({
+    isAuth: false
+  }),
+  computed: mapGetters(['levels']),
+  created(){
+    this.$store.dispatch('firebaseSignIn').then(user => {
+      if (user !== null) {
+        this.isAuth = true;
+        this.$store.dispatch('setUserId', user.uid);
+        this.$store.dispatch('setBoard');
+      } else {
+        this.isAuth = false;
+        this.$store.dispatch('showLoginForm');
+      }
+    });
+  },
+  methods: {
+    defaultOverlayHide() {
+      this.$refs.defaultOverlay.style.display = 'none';
+    }
   }
 }
 </script>
@@ -47,7 +76,7 @@ export default {
 <style scoped>
 .stage {
 position: relative;
-background: url(~/assets/burned.gif) no-repeat 0 -5000px;
+background: url(~assets/burned.gif) no-repeat 0 -5000px;
 }
 .overlay {
 position: fixed;

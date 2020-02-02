@@ -15,9 +15,9 @@ import {mapState} from 'vuex'
 import Person from '~/components/Person.vue'
 
 export default {
-  computed: mapState(['people', 'board']),
   components: {
     'person': Person
-  }
+  },
+  computed: mapState(['people', 'board'])
 }
 </script>

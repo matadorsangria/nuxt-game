@@ -4,15 +4,19 @@
 
 <script>
 export default {
-  name: 'Square',
+  props: {
+    square: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
-    className: function() {
+    className() {
       return this.square.layer;
     }
   },
-  props: ['square'],
   methods: {
-    onClick: function() {
+    onClick() {
       this.$store.dispatch('squareClick', this.square);
     }
   }

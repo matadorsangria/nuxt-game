@@ -4,9 +4,8 @@
 
 <script>
 export default {
-  name: 'StartButton',
   methods: {
-    onClick: function() {
+    onClick() {
       location.reload();
     }
   }

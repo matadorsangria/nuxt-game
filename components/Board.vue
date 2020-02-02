@@ -16,10 +16,10 @@ import {mapState} from 'vuex'
 import Square from '~/components/Square.vue'
 
 export default {
-  computed: mapState(['board', 'boardStyle', 'turn', 'scene']),
   components: {
     'square': Square
-  }
+  },
+  computed: mapState(['board', 'boardStyle', 'turn', 'scene'])
 }
 </script>
 
