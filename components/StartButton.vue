@@ -4,11 +4,15 @@
 
 <script>
 export default {
-  name: 'StartButton',
-  props: ['level'],
+  props: {
+    level: {
+      type: String,
+      required: true
+    }
+  },
   methods: {
-    onClick: function(level) {
-      document.querySelector('.default').style.display = 'none';
+    onClick(level) {
+      this.$emit('defaultOverlayHide');
       this.$store.dispatch('sound', 'bgm');
       this.$store.dispatch('setPeople', level);
     }

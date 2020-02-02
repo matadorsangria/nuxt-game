@@ -40,21 +40,29 @@
 
 <script>
 export default {
-  name: 'Person',
-  props: ['person', 'board'],
-  data: function(){
+  props: {
+    person: {
+      type: Object,
+      required: true
+    },
+    board: {
+      type: Array,
+      required: true
+    }
+  },
+  data(){
     return {
       isHover: false
     };
   },
   computed: {
-    styleArticle: function() {
+    styleArticle() {
       return {
         left : this.calcPosition(this.person.x),
         top  : this.calcPosition(this.person.y)
       }
     },
-    styleP: function() {
+    styleP() {
       const personWidth = this.person.width;
       return {
         width : personWidth + 'px',
@@ -62,22 +70,22 @@ export default {
         transform: `rotateY(${this.person.direction === 'right' ? 0 : 180}deg)`
       }
     },
-    styleIndicator: function() {
+    styleIndicator() {
       return {
         width : this.person.hp / this.person.maxhp * 100 + '%',
         backgroundColor : (this.person.hp / this.person.maxhp > 0.3) ? 'lime' : 'red'
       }
     }
   },
-  methods: {
-    calcPosition: function(pos) {
-      const squareWidth = this.board[0].width;
-      return pos * squareWidth - (squareWidth + this.person.width - 1) / 2 + 'px';
-    }
-  },
-  created: function(){
+  created(){
     if(this.person.id === 1){
       this.$store.dispatch('moveFocus', this.person);
+    }
+  },
+  methods: {
+    calcPosition(pos) {
+      const squareWidth = this.board[0].width;
+      return pos * squareWidth - (squareWidth + this.person.width - 1) / 2 + 'px';
     }
   }
 }
@@ -116,16 +124,16 @@ height: 100%;
 background-repeat: no-repeat;
 }
 article p.pengin span {
-background-image:url(~/assets/pengin.png);
+background-image:url(~assets/pengin.png);
 }
 article p.enemy1 span {
-background-image:url(~/assets/enemy1.png);
+background-image:url(~assets/enemy1.png);
 }
 article p.enemy2 span {
-background-image:url(~/assets/enemy2.png);
+background-image:url(~assets/enemy2.png);
 }
 article p.enemy3 span {
-background-image:url(~/assets/enemy3.png);
+background-image:url(~assets/enemy3.png);
 }
 article.attacked p span {
 animation: shake 0.3s linear;
@@ -155,7 +163,7 @@ left: -30px;
 top: -30px;
 width: 160px;
 height: 160px;
-background: url(~/assets/burned.gif) no-repeat 0 0;
+background: url(~assets/burned.gif) no-repeat 0 0;
 background-size: 160px 160px;
 animation: burnP 1.6s linear;
 }
