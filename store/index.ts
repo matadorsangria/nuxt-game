@@ -16,7 +16,7 @@ import firebase from '~/plugins/firebase.js';
 const db = firebase.firestore();
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
-let audioCtx = new AudioContext();
+let audioCtx: (AudioContext | null) = null;
 const boardSize = [5, 4];
 const personWidth = 100;
 const peopleData = {
@@ -122,9 +122,13 @@ function getPersonFromSquare(people: People, s: Square) {
 function getPersonIndexFromId(people: People, id: number) {
   return people.findIndex((p) => p.id === id);
 }
-function sound(filename: String) {
+function sound(filename: string) {
   // Audio 用の buffer を読み込む
   const getAudioBuffer = function(url: string, fn: (buffer: AudioBuffer) => void) {
+    if (audioCtx === null) {
+      audioCtx = new AudioContext();
+    }
+
     const req = new XMLHttpRequest();
     // array buffer を指定
     req.responseType = 'arraybuffer';
@@ -133,7 +137,7 @@ function sound(filename: String) {
       if (req.readyState === 4) {
         if (req.status === 0 || req.status === 200) {
           // array buffer を audio buffer に変換
-          audioCtx.decodeAudioData(req.response, function(buffer) {
+          audioCtx!.decodeAudioData(req.response, function(buffer) {
             // コールバックを実行
             fn(buffer);
           });
@@ -147,17 +151,17 @@ function sound(filename: String) {
 
   // サウンドを再生
   const playSound = function(buffer: AudioBuffer) {
-    if (audioCtx.state === 'closed') {
+    if (audioCtx!.state === 'closed') {
       // @ts-ignore
       audioCtx = null;
       audioCtx = new AudioContext();
     }
     // source を作成
-    const source = audioCtx.createBufferSource();
+    const source = audioCtx!.createBufferSource();
     // buffer をセット
     source.buffer = buffer;
     // audioCtx に connect
-    source.connect(audioCtx.destination);
+    source.connect(audioCtx!.destination);
     // 再生
     source.start(0);
   };
@@ -412,7 +416,7 @@ export const actions = {
           });
           if(categoryArr[0] === 0){
             resetUserData(state);
-            audioCtx.close();
+            audioCtx!.close();
             // @ts-ignore
             audioCtx = null;
             alert('YOU LOSE...');
@@ -420,7 +424,7 @@ export const actions = {
             $restart.style.display = 'flex';
           }else if(categoryArr[1] === 0){
             resetUserData(state);
-            audioCtx.close().then(function() {
+            audioCtx!.close().then(function() {
               sound('win');
               setTimeout(function() {
                 alert('YOU WIN!');
@@ -466,7 +470,7 @@ export const actions = {
       }
     }
   },
-  sound (filename: string) {
+  sound ({}: ActionContext, filename: string) {
     sound(filename);
   },
   firebaseSignIn () {
