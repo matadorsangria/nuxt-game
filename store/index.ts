@@ -45,7 +45,7 @@ const initialState: State = {
   turn: 0,
   scene: 'movefocus',
   phase: 1,
-  level: 'normal',
+  level: '',
 };
 
 function getAvailableArr(state: State, p: Person, scene: Scene) {
