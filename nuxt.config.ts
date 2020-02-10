@@ -1,3 +1,5 @@
+import { Configuration } from 'webpack'
+
 const pkg = require('./package')
 
 module.exports = {
@@ -59,6 +61,10 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    extend(config: Configuration) {
+      // @ts-ignore
+      config.performance.maxAssetSize = 1000000;
+    }
   },
 
   buildModules: ['@nuxt/typescript-build'],
