@@ -34,11 +34,11 @@
 <script>
 import {mapGetters} from 'vuex'
 import 'firebaseui-ja/dist/firebaseui.css';
-import Board from '~/components/Board.vue'
-import People from '~/components/People.vue'
-import StartButton from '~/components/StartButton.vue'
-import RestartButton from '~/components/RestartButton.vue'
-import SignOutButton from '~/components/SignOutButton.vue'
+import Board from '~/components/organisms/Board.vue'
+import People from '~/components/organisms/People.vue'
+import StartButton from '~/components/atoms/StartButton.vue'
+import RestartButton from '~/components/atoms/RestartButton.vue'
+import SignOutButton from '~/components/atoms/SignOutButton.vue'
 
 export default {
   components: {

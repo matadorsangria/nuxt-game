@@ -12,7 +12,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import Person from '~/components/Person.vue'
+import Person from '~/components/molecules/Person.vue'
 
 export default {
   components: {
