@@ -229,6 +229,7 @@ export const mutations = {
   },
   setPeople (state: State, payload: {newState: State, level: Level}) {
     const {newState, level} = payload;
+    state.level = level;
 
     const people = (
       newState &&
@@ -366,11 +367,11 @@ export const actions = {
       if (doc.exists) {
         // @ts-ignore
         const _state = doc.data()[level];
-        if (_state) {
+        if (_state && _state.level !== '') {
           console.log("user data exists.");
           commit('setPeople', {
             newState: _state,
-            level,
+            level: _state.level,
           });
         } else {
           console.log("user data is initialized.");
