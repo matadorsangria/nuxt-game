@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     person: {
@@ -79,10 +81,11 @@ export default {
   },
   created(){
     if(this.person.id === 1){
-      this.$store.dispatch('moveFocus', this.person);
+      this.moveFocus(this.person);
     }
   },
   methods: {
+    ...mapActions(['moveFocus']),
     calcPosition(pos) {
       const squareWidth = this.board[0].width;
       return pos * squareWidth - (squareWidth + this.person.width - 1) / 2 + 'px';

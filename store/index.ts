@@ -367,11 +367,11 @@ export const actions = {
       if (doc.exists) {
         // @ts-ignore
         const _state = doc.data()[level];
-        if (_state && _state.level !== '') {
+        if (_state) {
           console.log("user data exists.");
           commit('setPeople', {
             newState: _state,
-            level: _state.level,
+            level,
           });
         } else {
           console.log("user data is initialized.");

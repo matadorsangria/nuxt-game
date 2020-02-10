@@ -1,23 +1,21 @@
 <template>
   <div id="people" class="people">
-    <person
+    <Person
       v-for="person in people"
       :key="person.id"
       :person="person"
       :board="board"
       :class="person.class"
-    ></person>
+    />
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import Person from '~/components/molecules/Person.vue'
 
 export default {
-  components: {
-    'person': Person
-  },
+  components: { Person },
   computed: mapState(['people', 'board'])
 }
 </script>

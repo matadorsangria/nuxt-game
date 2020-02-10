@@ -1,27 +1,27 @@
 <template>
   <div v-if="isAuth">
     <div class="stage">
-      <board></board>
-      <people></people>
+      <Board />
+      <People />
     </div>
     <div class="overlay default" ref="defaultOverlay">
       <div>
         <p>
-          <startButton
+          <StartButton
             v-for="level in levels"
             :key="level"
             :level="level"
             @defaultOverlayHide="defaultOverlayHide"
-          ></startButton>
+          />
         </p>
         <p>※音が出ますのでご注意ください</p>
-        <signOutButton></signOutButton>
+        <button @click="firebaseSignOut">サインアウト</button>
       </div>
     </div>
     <div class="overlay restart">
       <div>
         <p>
-          <restartButton></restartButton>
+          <button @click="reload">やり直す</button>
         </p>
       </div>
     </div>
@@ -32,41 +32,37 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import 'firebaseui-ja/dist/firebaseui.css';
 import Board from '~/components/organisms/Board.vue'
 import People from '~/components/organisms/People.vue'
-import StartButton from '~/components/atoms/StartButton.vue'
-import RestartButton from '~/components/atoms/RestartButton.vue'
-import SignOutButton from '~/components/atoms/SignOutButton.vue'
+import StartButton from '~/components/molecules/StartButton.vue'
 
 export default {
-  components: {
-    'board': Board,
-    'people': People,
-    'startButton': StartButton,
-    'restartButton': RestartButton,
-    'signOutButton': SignOutButton
-  },
+  components: { Board, People, StartButton },
   data: () => ({
     isAuth: false
   }),
   computed: mapGetters(['levels']),
   created(){
-    this.$store.dispatch('firebaseSignIn').then(user => {
+    this.firebaseSignIn().then(user => {
       if (user !== null) {
         this.isAuth = true;
-        this.$store.dispatch('setUserId', user.uid);
-        this.$store.dispatch('setBoard');
+        this.setUserId(user.uid);
+        this.setBoard();
       } else {
         this.isAuth = false;
-        this.$store.dispatch('showLoginForm');
+        this.showLoginForm();
       }
     });
   },
   methods: {
+    ...mapActions([ 'firebaseSignIn', 'firebaseSignOut', 'setUserId', 'setBoard', 'showLoginForm' ]),
     defaultOverlayHide() {
       this.$refs.defaultOverlay.style.display = 'none';
+    },
+    reload() {
+      location.reload();
     }
   }
 }
