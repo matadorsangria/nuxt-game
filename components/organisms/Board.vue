@@ -13,7 +13,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import Square from '~/components/Square.vue'
+import Square from '~/components/molecules/Square.vue'
 
 export default {
   components: {
