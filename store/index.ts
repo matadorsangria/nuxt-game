@@ -229,7 +229,6 @@ export const mutations = {
   },
   setPeople (state: State, payload: {newState: State, level: Level}) {
     const {newState, level} = payload;
-    state.level = level;
 
     const people = (
       newState &&
