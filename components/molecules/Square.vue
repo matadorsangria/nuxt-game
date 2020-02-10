@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     square: {
@@ -16,8 +18,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['squareClick']),
     onClick() {
-      this.$store.dispatch('squareClick', this.square);
+      this.squareClick(this.square);
     }
   }
 }

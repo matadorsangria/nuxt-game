@@ -1,28 +1,25 @@
 <template>
   <div id="board" :class="`board turn${turn} scene_${scene}`">
     <ul :style="boardStyle">
-      <square
+      <Square
         v-for="(square, index) in board"
         :key="index"
         :square="square"
         :style="square.style"
-      ></square>
+      />
     </ul>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import Square from '~/components/molecules/Square.vue'
 
 export default {
-  components: {
-    'square': Square
-  },
+  components: { Square },
   computed: mapState(['board', 'boardStyle', 'turn', 'scene'])
 }
 </script>
-
 
 <style scoped>
 ul {

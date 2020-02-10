@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: {
     level: {
@@ -11,10 +13,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['sound', 'setPeople']),
     onClick(level) {
       this.$emit('defaultOverlayHide');
-      this.$store.dispatch('sound', 'bgm');
-      this.$store.dispatch('setPeople', level);
+      this.sound('bgm');
+      this.setPeople(level);
     }
   }
 }
