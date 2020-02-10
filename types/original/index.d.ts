@@ -78,7 +78,7 @@ export interface State {
   turn: number
   scene: Scene
   phase: number
-  level: Level
+  level: Level | ''
 }
 
 export interface ActionContext {
