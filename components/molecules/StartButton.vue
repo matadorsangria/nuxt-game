@@ -1,11 +1,20 @@
 <template>
-  <button @click="onClick(level)">{{ level.toUpperCase() }}</button>
+  <v-btn @click="onClick(level)" :color="colorObj[level]">{{ level.toUpperCase() }}</v-btn>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      colorObj: {
+        easy: 'green',
+        normal: 'yellow',
+        hard: 'red'
+      }
+    }
+  },
   props: {
     level: {
       type: String,

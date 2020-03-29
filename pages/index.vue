@@ -6,7 +6,7 @@
     </div>
     <div class="overlay default" ref="defaultOverlay">
       <div>
-        <p>
+        <p class="v-application">
           <StartButton
             v-for="level in levels"
             :key="level"
@@ -14,14 +14,14 @@
             @defaultOverlayHide="defaultOverlayHide"
           />
         </p>
-        <p>※音が出ますのでご注意ください</p>
-        <button @click="firebaseSignOut">サインアウト</button>
+        <p class="sound-alert">※音が出ますのでご注意ください</p>
+        <v-btn @click="firebaseSignOut">サインアウト</v-btn>
       </div>
     </div>
     <div class="overlay restart">
       <div>
         <p>
-          <button @click="reload">やり直す</button>
+          <v-btn @click="reload">やり直す</v-btn>
         </p>
       </div>
     </div>
@@ -69,27 +69,35 @@ export default {
 </script>
 
 
-<style scoped>
+<style scoped lang="scss">
 .stage {
-position: relative;
-background: url(~assets/burned.gif) no-repeat 0 -5000px;
+  position: relative;
+  background: url(~assets/burned.gif) no-repeat 0 -5000px;
+
+  @media screen and (max-width:640px) {
+    transform: scale(0.4);
+  }
 }
 .overlay {
-position: fixed;
-left: 0;
-top: 0;
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-height: 100%;
-background-color: #fff;
-text-align: center;
-}
-.overlay button {
-margin: 0 5px;
-}
-.overlay.restart {
-display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  text-align: center;
+
+  &.restart {
+    display: none;
+  }
+  button {
+    margin: 0 10px;
+  }
+  .sound-alert {
+    padding: 10px 0 20px;
+  }
 }
 </style>

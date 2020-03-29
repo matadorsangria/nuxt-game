@@ -28,7 +28,8 @@
     "types": [
       "@types/node",
       "@types/webpack",
-      "@nuxt/types"
+      "@nuxt/types",
+      "vuetify"
     ]
   },
   "exclude": [
