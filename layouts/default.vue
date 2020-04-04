@@ -3,31 +3,3 @@
     <nuxt />
   </div>
 </template>
-
-<style lang="scss">
-$color-pack: false;
-
-@import '~vuetify/src/styles/main.sass';
-
-html, body, #root {
-  height: 100%;
-}
-#root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Roboto", sans-serif;
-}
-
-ul {
-  list-style: none;
-  li {
-    margin: 0;
-    padding: 0;
-  }
-}
-#__nuxt, #__layout {
-  height: 100%;
-}
-
-</style>

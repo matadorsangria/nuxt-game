@@ -116,16 +116,16 @@ article {
       background-repeat: no-repeat;
     }
     &.pengin span {
-      background-image:url(~assets/pengin.png);
+      background-image:url(~assets/images/pengin.png);
     }
     &.enemy1 span {
-      background-image:url(~assets/enemy1.png);
+      background-image:url(~assets/images/enemy1.png);
     }
     &.enemy2 span {
-      background-image:url(~assets/enemy2.png);
+      background-image:url(~assets/images/enemy2.png);
     }
     &.enemy3 span {
-      background-image:url(~assets/enemy3.png);
+      background-image:url(~assets/images/enemy3.png);
     }
   }
 
@@ -149,7 +149,7 @@ article {
       top: -30px;
       width: 160px;
       height: 160px;
-      background: url(~assets/burned.gif) no-repeat 0 0;
+      background: url(~assets/images/burned.gif) no-repeat 0 0;
       background-size: 160px 160px;
       animation: burnP 1.6s linear;
     }

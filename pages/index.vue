@@ -72,7 +72,7 @@ export default {
 <style scoped lang="scss">
 .stage {
   position: relative;
-  background: url(~assets/burned.gif) no-repeat 0 -5000px;
+  background: url(~assets/images/burned.gif) no-repeat 0 -5000px;
 
   @media screen and (max-width:640px) {
     transform: scale(0.4);
