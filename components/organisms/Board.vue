@@ -21,50 +21,55 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 ul {
-box-sizing: border-box;
-display: flex;
-flex-wrap: wrap;
-border: 1px solid #999;
-border-width: 0 1px 1px 0;
-}
-ul li {
-box-sizing: border-box;
-border: 1px solid #999;
-border-width: 1px 0 0 1px;
-}
-ul li.current {
-background: #ffd;
-}
-.scene_movefocus ul li.us,
-.scene_movefocus ul li.enemy {
-background: #eee;
-}
-.scene_movefocus ul li.focused {
-background: #ddffff;
-cursor: pointer;
-}
-.scene_movefocus ul li.focused:hover {
-box-shadow:0px 0px 6px 3px #aff inset;
-}
-.scene_attackfocus ul li.focused {
-background: #eee;
-}
-.scene_attackfocus.turn0 ul li.us {
-background: #eee;
-}
-.scene_attackfocus.turn1 ul li.us {
-background: #fdf;
-}
-.scene_attackfocus.turn0 ul li.enemy {
-background: #fdf;
-cursor: pointer;
-}
-.scene_attackfocus.turn1 ul li.enemy {
-background: #eee;
-}
-.scene_attackfocus ul li.enemy:hover {
-box-shadow:0px 0px 6px 3px #faf inset;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #999;
+  border-width: 0 1px 1px 0;
+
+  li {
+    box-sizing: border-box;
+    border: 1px solid #999;
+    border-width: 1px 0 0 1px;
+
+    &.current {
+      background: #ffd;
+    }
+
+    .scene_movefocus &.us,
+    .scene_movefocus &.enemy {
+      background: #eee;
+    }
+    .scene_movefocus &.focused {
+      background: #ddffff;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow:0px 0px 6px 3px #aff inset;
+      }
+    }
+    .scene_attackfocus &.focused {
+      background: #eee;
+    }
+    .scene_attackfocus.turn0 &.us {
+      background: #eee;
+    }
+    .scene_attackfocus.turn1 &.us {
+      background: #fdf;
+    }
+    .scene_attackfocus.turn0 &.enemy {
+      background: #fdf;
+      cursor: pointer;
+    }
+    .scene_attackfocus.turn1 &.enemy {
+      background: #eee;
+
+      &:hover {
+        box-shadow:0px 0px 6px 3px #faf inset;
+      }
+    }
+  }
 }
 </style>
