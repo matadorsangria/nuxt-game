@@ -4,7 +4,7 @@
       <Board />
       <People />
     </div>
-    <div class="overlay default" ref="defaultOverlay">
+    <div ref="defaultOverlay" class="overlay default">
       <div>
         <p class="v-application">
           <StartButton

@@ -56,7 +56,7 @@ function getAvailableArr(state: State, p: Person, scene: Scene) {
     [0, -1],
   ];
   let availableArr: AvailableArr = [];
-  let availableObj: AvailableObj = {};
+  const availableObj: AvailableObj = {};
   const distance = (scene === 'move') ? p.move : p.attack;
   for (let i = 0; i < distance; i++) {
     if(i === 0) {
@@ -470,6 +470,7 @@ export const actions = {
       }
     }
   },
+  // eslint-disable-next-line no-empty-pattern
   sound ({}: ActionContext, filename: string) {
     sound(filename);
   },
