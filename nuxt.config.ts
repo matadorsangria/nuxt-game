@@ -68,8 +68,9 @@ module.exports = {
   */
   build: {
     extend(config: Configuration) {
-      // @ts-ignore
-      config.performance.maxAssetSize = 1000000;
+      if(!config.performance) return;
+      config.performance.maxAssetSize = 1200000;
+      config.performance.maxEntrypointSize = 1500000;
     }
   },
 
