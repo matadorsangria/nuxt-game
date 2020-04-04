@@ -2,26 +2,27 @@
   <li :class="className" @click="onClick"></li>
 </template>
 
-<script>
+<script lang="ts">
+import { Square } from 'original'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { mapActions } from 'vuex'
 
-export default {
-  props: {
-    square: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    className() {
-      return this.square.layer;
-    }
-  },
+@Component({
   methods: {
-    ...mapActions(['squareClick']),
-    onClick() {
-      this.squareClick(this.square);
-    }
+    ...mapActions(['squareClick'])
+  }
+})
+export default class SquareVue extends Vue {
+  @Prop({type: Object, required: true})
+  square!: Square
+  
+  get className() {
+    return this.square.layer;
+  }
+
+  onClick() {
+    // @ts-ignore
+    this.squareClick(this.square);
   }
 }
 </script>

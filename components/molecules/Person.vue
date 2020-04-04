@@ -38,58 +38,58 @@
   </article>
 </template>
 
-<script>
+<script lang="ts">
+import { Person, Board } from 'original'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { mapActions } from 'vuex'
 
-export default {
-  props: {
-    person: {
-      type: Object,
-      required: true
-    },
-    board: {
-      type: Array,
-      required: true
-    }
-  },
-  data(){
+@Component({
+  methods: {
+    ...mapActions(['moveFocus'])
+  }
+})
+export default class PersonVue extends Vue {
+  @Prop({type: Object, required: true})
+  person!: Person
+
+  @Prop({type: Array, required: true})
+  board!: Board
+
+  isHover = false
+
+  get styleArticle() {
     return {
-      isHover: false
-    };
-  },
-  computed: {
-    styleArticle() {
-      return {
-        left : this.calcPosition(this.person.x),
-        top  : this.calcPosition(this.person.y)
-      }
-    },
-    styleP() {
-      const personWidth = this.person.width;
-      return {
-        width : personWidth + 'px',
-        height: personWidth + 'px',
-        transform: `rotateY(${this.person.direction === 'right' ? 0 : 180}deg)`
-      }
-    },
-    styleIndicator() {
-      return {
-        width : this.person.hp / this.person.maxhp * 100 + '%',
-        backgroundColor : (this.person.hp / this.person.maxhp > 0.3) ? 'lime' : 'red'
-      }
+      left : this.calcPosition(this.person.x),
+      top  : this.calcPosition(this.person.y)
     }
-  },
+  }
+
+  get styleP() {
+    const personWidth = this.person.width;
+    return {
+      width : personWidth + 'px',
+      height: personWidth + 'px',
+      transform: `rotateY(${this.person.direction === 'right' ? 0 : 180}deg)`
+    }
+  }
+
+  get styleIndicator() {
+    return {
+      width : this.person.hp / this.person!.maxhp! * 100 + '%',
+      backgroundColor : (this.person.hp / this.person!.maxhp! > 0.3) ? 'lime' : 'red'
+    }
+  }
+
   created(){
-    if(this.person.id === 1){
+    if (this.person.id === 1) {
+      // @ts-ignore
       this.moveFocus(this.person);
     }
-  },
-  methods: {
-    ...mapActions(['moveFocus']),
-    calcPosition(pos) {
-      const squareWidth = this.board[0].width;
-      return pos * squareWidth - (squareWidth + this.person.width - 1) / 2 + 'px';
-    }
+  }
+
+  calcPosition(pos: number) {
+    const squareWidth = this.board[0].width;
+    return pos * squareWidth - (squareWidth + this.person.width! - 1) / 2 + 'px';
   }
 }
 </script>

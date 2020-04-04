@@ -31,39 +31,55 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Square } from 'original'
+import { Component, Vue } from 'nuxt-property-decorator'
 import { mapActions, mapGetters } from 'vuex'
 import 'firebaseui/dist/firebaseui.css';
 import Board from '~/components/organisms/Board.vue'
 import People from '~/components/organisms/People.vue'
 import StartButton from '~/components/molecules/StartButton.vue'
 
-export default {
-  components: { Board, People, StartButton },
-  data: () => ({
-    isAuth: false
-  }),
-  computed: mapGetters(['levels']),
+@Component({
+  components: {
+    Board,
+    People,
+    StartButton
+  },
+  computed: {
+    ...mapGetters(['levels'])
+  },
+  methods: {
+    ...mapActions(['firebaseSignIn', 'firebaseSignOut', 'setUserId', 'setBoard', 'showLoginForm'])
+  }
+})
+export default class IndexVue extends Vue {
+  isAuth = false
+
   created(){
+    // @ts-ignore
     this.firebaseSignIn().then(user => {
       if (user !== null) {
         this.isAuth = true;
+        // @ts-ignore
         this.setUserId(user.uid);
+        // @ts-ignore
         this.setBoard();
       } else {
         this.isAuth = false;
+        // @ts-ignore
         this.showLoginForm();
       }
     });
-  },
-  methods: {
-    ...mapActions([ 'firebaseSignIn', 'firebaseSignOut', 'setUserId', 'setBoard', 'showLoginForm' ]),
-    defaultOverlayHide() {
-      this.$refs.defaultOverlay.style.display = 'none';
-    },
-    reload() {
-      location.reload();
-    }
+  }
+
+  defaultOverlayHide() {
+    const defaultOverlay = this.$refs.defaultOverlay as HTMLElement;
+    defaultOverlay.style.display = 'none';
+  }
+
+  reload() {
+    location.reload();
   }
 }
 </script>

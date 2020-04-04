@@ -21,7 +21,8 @@
     "core-js": "2.6.9",
     "firebase": "^7.13.2",
     "firebaseui": "^4.5.0",
-    "nuxt": "^2.11.0"
+    "nuxt": "^2.11.0",
+    "nuxt-property-decorator": "^2.5.1"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.2",

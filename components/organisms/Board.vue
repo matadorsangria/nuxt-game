@@ -12,13 +12,19 @@
 </template>
 
 <script>
+import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
 import Square from '~/components/molecules/Square.vue'
 
-export default {
-  components: { Square },
-  computed: mapState(['board', 'boardStyle', 'turn', 'scene'])
-}
+@Component({
+  components: {
+    Square
+  },
+  computed: {
+    ...mapState(['board', 'boardStyle', 'turn', 'scene'])
+  }
+})
+export default class BoardVue extends Vue {}
 </script>
 
 <style scoped lang="scss">

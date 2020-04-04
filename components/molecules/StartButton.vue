@@ -2,32 +2,32 @@
   <v-btn :color="colorObj[level]" @click="onClick(level)">{{ level.toUpperCase() }}</v-btn>
 </template>
 
-<script>
+<script lang="ts">
+import { Level } from 'original'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { mapActions } from 'vuex'
 
-export default {
-  props: {
-    level: {
-      type: String,
-      required: true
-    }
-  },
-  data() {
-    return {
-      colorObj: {
-        easy: 'green',
-        normal: 'yellow',
-        hard: 'red'
-      }
-    }
-  },
+@Component({
   methods: {
-    ...mapActions(['sound', 'setPeople']),
-    onClick(level) {
-      this.$emit('defaultOverlayHide');
-      this.sound('bgm');
-      this.setPeople(level);
-    }
+    ...mapActions(['sound', 'setPeople'])
+  }
+})
+export default class StartButtonVue extends Vue {
+  @Prop({type: String, required: true})
+  level!: Level
+
+  colorObj = {
+    easy: 'green',
+    normal: 'yellow',
+    hard: 'red'
+  }
+
+  onClick(level: Level) {
+    this.$emit('defaultOverlayHide');
+    // @ts-ignore
+    this.sound('bgm');
+    // @ts-ignore
+    this.setPeople(level);
   }
 }
 </script>
