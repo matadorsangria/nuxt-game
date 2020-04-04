@@ -11,7 +11,7 @@ import {
   State,
   ActionContext
 } from 'original';
-import firebaseui from 'firebaseui-ja';
+import * as firebaseui from 'firebaseui';
 import firebase from '~/plugins/firebase.js';
 const db = firebase.firestore();
 

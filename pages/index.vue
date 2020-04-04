@@ -14,14 +14,14 @@
             @defaultOverlayHide="defaultOverlayHide"
           />
         </p>
-        <p class="sound-alert">※音が出ますのでご注意ください</p>
-        <v-btn @click="firebaseSignOut">サインアウト</v-btn>
+        <p class="sound-alert">Sound will be played, so pay attention to volume.</p>
+        <v-btn @click="firebaseSignOut">Sign Out</v-btn>
       </div>
     </div>
     <div class="overlay restart">
       <div>
         <p>
-          <v-btn @click="reload">やり直す</v-btn>
+          <v-btn @click="reload">Retry</v-btn>
         </p>
       </div>
     </div>
@@ -33,7 +33,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import 'firebaseui-ja/dist/firebaseui.css';
+import 'firebaseui/dist/firebaseui.css';
 import Board from '~/components/organisms/Board.vue'
 import People from '~/components/organisms/People.vue'
 import StartButton from '~/components/molecules/StartButton.vue'
@@ -93,11 +93,15 @@ export default {
   &.restart {
     display: none;
   }
+  .v-application {
+    justify-content: center;
+  }
   button {
     margin: 0 10px;
   }
   .sound-alert {
-    padding: 10px 0 20px;
+    padding: 20px 0 30px;
+    font-family: 'Avenir', sans-serif;
   }
 }
 </style>

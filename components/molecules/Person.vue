@@ -13,7 +13,7 @@
       <table>
         <tbody>
           <tr>
-            <th>名前</th>
+            <th>Name</th>
             <td>{{ person.name }}</td>
           </tr>
           <tr>
@@ -21,15 +21,15 @@
             <td>{{ person.hp }} / {{ person.maxhp }}</td>
           </tr>
           <tr>
-            <th>移動距離</th>
+            <th>Distance</th>
             <td>{{ person.move }}</td>
           </tr>
           <tr>
-            <th>攻撃力</th>
+            <th>Attack</th>
             <td>{{ person.power }}</td>
           </tr>
           <tr>
-            <th>攻撃範囲</th>
+            <th>Range</th>
             <td>{{ person.attack }}</td>
           </tr>
         </tbody>
@@ -229,6 +229,7 @@ article.hover .person_info {
 visibility: visible;
 opacity: 1;
 box-shadow:1px 1px 4px rgba(0, 0, 0, .5);
+font-family: 'Avenir', sans-serif;
 }
 article .person_info table {
 width: 160px;
