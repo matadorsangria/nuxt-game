@@ -1,5 +1,5 @@
 # Penguin & Ghost
-A simple tactics game inspired by fire emblem
+A simple turn-based strategytactics game
 
 ## Install
 ```
