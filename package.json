@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
-    "start": "nuxt-ts start",
+    "start": "nuxt-ts build && nuxt-ts start",
     "generate": "nuxt-ts generate",
     "check-types": "tsc",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
