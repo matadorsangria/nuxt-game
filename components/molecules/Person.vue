@@ -199,7 +199,7 @@ article {
     transition: opacity 0.3s;
     transition-delay: 0.8s;
 
-    .hover & {
+    @at-root article.hover .person_info {
       visibility: visible;
       opacity: 1;
       box-shadow:1px 1px 4px rgba(0, 0, 0, .5);
