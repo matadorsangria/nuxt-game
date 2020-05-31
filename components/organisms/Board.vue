@@ -14,7 +14,7 @@
 <script>
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
-import Square from '~/components/molecules/Square.vue'
+import Square from '../molecules/Square.vue'
 
 @Component({
   components: {

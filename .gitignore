@@ -15,3 +15,6 @@ dist
 
 # dotenv
 .env
+
+# storybook
+storybook-static

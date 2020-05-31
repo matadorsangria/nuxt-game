@@ -13,7 +13,7 @@
 <script>
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
-import Person from '~/components/molecules/Person.vue'
+import Person from '../molecules/Person.vue'
 
 @Component({
   components: {
