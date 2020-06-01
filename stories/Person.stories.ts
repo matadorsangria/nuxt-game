@@ -1,5 +1,5 @@
 import { withInfo } from 'storybook-addon-vue-info'
-import Person from "../components/molecules/Person.vue";
+import Person from '../components/molecules/Person.vue';
 
 const board = [
   {

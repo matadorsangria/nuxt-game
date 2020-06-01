@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import { withInfo } from 'storybook-addon-vue-info'
-import Board from "../components/organisms/Board.vue";
+import Board from '../components/organisms/Board.vue';
 
 export default {
   title: 'Square',

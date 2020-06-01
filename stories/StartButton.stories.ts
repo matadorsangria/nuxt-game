@@ -1,5 +1,5 @@
 import { withInfo } from 'storybook-addon-vue-info'
-import StartButton from "../components/molecules/StartButton.vue";
+import StartButton from '../components/molecules/StartButton.vue';
 
 export default {
   title: 'StartButton',
