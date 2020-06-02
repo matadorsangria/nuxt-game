@@ -23,7 +23,7 @@ const wrapStyle = {
   height: `${board[0].width}px`
 };
 
-const getPerson = character => {
+const getPerson = (character: string) => {
   return {
     id: 1,
     name: character,
