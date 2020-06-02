@@ -210,9 +210,11 @@ export const mutations = {
   setBoard (state: State) {
     const squareWidth = 160;
     const board = [];
+    let counter = 0;
     for (let i = 1; i <= boardSize[1]; i++) {
       for (let j = 1; j <= boardSize[0]; j++) {
         board.push({
+          id: ++counter,
           x: j,
           y: i,
           layer: null,

@@ -2,8 +2,8 @@
   <div id="board" :class="`board turn${turn} scene_${scene}`">
     <ul :style="boardStyle">
       <Square
-        v-for="(square, index) in board"
-        :key="index"
+        v-for="square in board"
+        :key="square.id"
         :square="square"
         :style="square.style"
       />
