@@ -32,7 +32,6 @@
 </template>
 
 <script lang="ts">
-import { Square } from 'original'
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapActions, mapGetters } from 'vuex'
 import 'firebaseui/dist/firebaseui.css';
