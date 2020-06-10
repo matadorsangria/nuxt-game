@@ -49,6 +49,8 @@ import { mapActions } from 'vuex'
   }
 })
 export default class PersonVue extends Vue {
+  moveFocus!: (person: Person) => void
+
   @Prop({type: Object, required: true})
   person!: Person
 
@@ -82,7 +84,6 @@ export default class PersonVue extends Vue {
 
   created(){
     if (this.person.id === 1) {
-      // @ts-ignore
       this.moveFocus(this.person);
     }
   }

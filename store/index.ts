@@ -152,7 +152,6 @@ function sound(filename: string) {
   // サウンドを再生
   const playSound = function(buffer: AudioBuffer) {
     if (audioCtx!.state === 'closed') {
-      // @ts-ignore
       audioCtx = null;
       audioCtx = new AudioContext();
     }
@@ -367,8 +366,7 @@ export const actions = {
     db.collection('users').doc(state.userId).get()
     .then(doc => {
       if (doc.exists) {
-        // @ts-ignore
-        const _state = doc.data()[level];
+        const _state = doc.data()![level];
         if (_state && _state.level !== '') {
           console.log("user data exists.");
           commit('setPeople', {
@@ -419,7 +417,6 @@ export const actions = {
           if(categoryArr[0] === 0){
             resetUserData(state);
             audioCtx!.close();
-            // @ts-ignore
             audioCtx = null;
             alert('YOU LOSE...');
             const $restart = <HTMLElement>document.querySelector('.restart');

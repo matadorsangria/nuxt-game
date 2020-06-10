@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import firebase from 'firebase'
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapActions, mapGetters } from 'vuex'
 import 'firebaseui/dist/firebaseui.css';
@@ -53,20 +54,20 @@ import StartButton from '~/components/molecules/StartButton.vue'
   }
 })
 export default class IndexVue extends Vue {
+  firebaseSignIn!: () => Promise<firebase.User>
+  setUserId!: (uid: string) => void
+  setBoard!: () => void
+  showLoginForm!: () => void
   isAuth = false
 
   created(){
-    // @ts-ignore
     this.firebaseSignIn().then(user => {
       if (user !== null) {
         this.isAuth = true;
-        // @ts-ignore
         this.setUserId(user.uid);
-        // @ts-ignore
         this.setBoard();
       } else {
         this.isAuth = false;
-        // @ts-ignore
         this.showLoginForm();
       }
     });

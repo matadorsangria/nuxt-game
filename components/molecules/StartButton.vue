@@ -13,6 +13,9 @@ import { mapActions } from 'vuex'
   }
 })
 export default class StartButtonVue extends Vue {
+  sound!: (filename: string) => void
+  setPeople!: (level: Level) => void
+
   @Prop({type: String, required: true})
   level!: Level
 
@@ -24,9 +27,7 @@ export default class StartButtonVue extends Vue {
 
   onClick(level: Level) {
     this.$emit('defaultOverlayHide');
-    // @ts-ignore
     this.sound('bgm');
-    // @ts-ignore
     this.setPeople(level);
   }
 }

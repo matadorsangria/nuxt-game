@@ -13,6 +13,8 @@ import { mapActions } from 'vuex'
   }
 })
 export default class SquareVue extends Vue {
+  squareClick!: (square: Square) => void
+
   @Prop({type: Object, required: true})
   square!: Square
   
@@ -21,7 +23,6 @@ export default class SquareVue extends Vue {
   }
 
   onClick() {
-    // @ts-ignore
     this.squareClick(this.square);
   }
 }
