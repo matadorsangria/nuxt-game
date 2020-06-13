@@ -71,6 +71,19 @@ module.exports = {
       if(!config.performance) return;
       config.performance.maxAssetSize = 1200000;
       config.performance.maxEntrypointSize = 1500000;
+    },
+    babel: {
+      presets({ isServer } : { isServer: boolean }) {
+        return [
+          [
+            require.resolve('@nuxt/babel-preset-app'),
+            {
+              buildTarget: isServer ? 'server' : 'client',
+              corejs: { version: 3 }
+            }
+          ]
+        ]
+      }
     }
   },
 
