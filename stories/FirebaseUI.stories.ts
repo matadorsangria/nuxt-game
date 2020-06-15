@@ -1,4 +1,4 @@
-import { withInfo } from 'storybook-addon-vue-info'
+import { withInfo } from 'storybook-addon-vue-info';
 import 'firebaseui/dist/firebaseui.css';
 
 export default {
@@ -6,9 +6,9 @@ export default {
   decorators: [withInfo],
   parameters: {
     info: {},
-    notes: 'This is not Vue Component.'
-  }
-}
+    notes: 'This is not Vue Component.',
+  },
+};
 
 export const SignIn = () => ({
   template: `
@@ -27,5 +27,5 @@ export const SignIn = () => ({
         </div>
       </div>
     </div>
-  `
-})
+  `,
+});

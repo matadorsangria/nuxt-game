@@ -1,4 +1,4 @@
-import { withInfo } from 'storybook-addon-vue-info'
+import { withInfo } from 'storybook-addon-vue-info';
 import Person from '../components/molecules/Person.vue';
 
 const board = [
@@ -12,15 +12,15 @@ const board = [
     layer: 'current',
     style: {
       width: '160px',
-      height: '160px'
-    }
-  }
+      height: '160px',
+    },
+  },
 ];
 
 const wrapStyle = {
   position: 'relative',
   width: `${board[0].width}px`,
-  height: `${board[0].width}px`
+  height: `${board[0].width}px`,
 };
 
 const getPerson = (character: string) => {
@@ -45,7 +45,7 @@ const getPerson = (character: string) => {
     },
     styleSpan: {
       backgroundSize: '100px 100px',
-    }
+    },
   };
 };
 
@@ -54,19 +54,19 @@ export default {
   decorators: [withInfo],
   parameters: {
     info: {},
-    notes: 'You can see informations when you hover the character.'
-  }
-}
+    notes: 'You can see informations when you hover the character.',
+  },
+};
 
 export const Pengin = () => ({
   components: { Person },
   template: `<div :style="wrapStyle"><person :person="person" :board="board"></person></div>`,
-  data: () => ({ 
+  data: () => ({
     person: getPerson('pengin'),
     board,
-    wrapStyle
+    wrapStyle,
   }),
-})
+});
 
 export const Enemy1 = () => ({
   components: { Person },
@@ -74,16 +74,16 @@ export const Enemy1 = () => ({
   data: () => ({
     person: getPerson('enemy1'),
     board,
-    wrapStyle
+    wrapStyle,
   }),
-})
+});
 
 export const Enemy2 = () => ({
   components: { Person },
   template: `<div :style="wrapStyle"><person :person="person" :board="board"></person></div>`,
-  data: () => ({ 
+  data: () => ({
     person: getPerson('enemy2'),
     board,
-    wrapStyle
+    wrapStyle,
   }),
-})
+});

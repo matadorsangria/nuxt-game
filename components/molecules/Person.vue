@@ -1,13 +1,15 @@
 <template>
   <article
-    :class="{hover:isHover}"
+    :class="{ hover: isHover }"
     :style="styleArticle"
     @mouseenter="isHover = !isHover"
     @mouseleave="isHover = !isHover"
   >
-    <p :class="person.classP" :style="styleP"><span :style="person.styleSpan"></span></p>
+    <p :class="person.classP" :style="styleP">
+      <span :style="person.styleSpan" />
+    </p>
     <div class="person_hp" :style="person.styleHP">
-      <div class="person_hp_indicator" :style="styleIndicator"></div>
+      <div class="person_hp_indicator" :style="styleIndicator" />
     </div>
     <div class="person_info">
       <table>
@@ -39,50 +41,51 @@
 </template>
 
 <script lang="ts">
-import { Person, Board } from 'original'
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { mapActions } from 'vuex'
+import { Person, Board } from 'original';
+import { Component, Prop, Vue } from 'nuxt-property-decorator';
+import { mapActions } from 'vuex';
 
 @Component({
   methods: {
-    ...mapActions(['moveFocus'])
-  }
+    ...mapActions(['moveFocus']),
+  },
 })
 export default class PersonVue extends Vue {
-  moveFocus!: (person: Person) => void
+  moveFocus!: (person: Person) => void;
 
-  @Prop({type: Object, required: true})
-  person!: Person
+  @Prop({ type: Object, required: true })
+  person!: Person;
 
-  @Prop({type: Array, required: true})
-  board!: Board
+  @Prop({ type: Array, required: true })
+  board!: Board;
 
-  isHover = false
+  isHover = false;
 
   get styleArticle() {
     return {
-      left : this.calcPosition(this.person.x),
-      top  : this.calcPosition(this.person.y)
-    }
+      left: this.calcPosition(this.person.x),
+      top: this.calcPosition(this.person.y),
+    };
   }
 
   get styleP() {
     const personWidth = this.person.width;
     return {
-      width : personWidth + 'px',
+      width: personWidth + 'px',
       height: personWidth + 'px',
-      transform: `rotateY(${this.person.direction === 'right' ? 0 : 180}deg)`
-    }
+      transform: `rotateY(${this.person.direction === 'right' ? 0 : 180}deg)`,
+    };
   }
 
   get styleIndicator() {
     return {
-      width : this.person.hp / this.person!.maxhp! * 100 + '%',
-      backgroundColor : (this.person.hp / this.person!.maxhp! > 0.3) ? 'lime' : 'red'
-    }
+      width: (this.person.hp / this.person!.maxhp!) * 100 + '%',
+      backgroundColor:
+        this.person.hp / this.person!.maxhp! > 0.3 ? 'lime' : 'red',
+    };
   }
 
-  created(){
+  created() {
     if (this.person.id === 1) {
       this.moveFocus(this.person);
     }
@@ -90,11 +93,12 @@ export default class PersonVue extends Vue {
 
   calcPosition(pos: number) {
     const squareWidth = this.board[0].width;
-    return pos * squareWidth - (squareWidth + this.person.width! - 1) / 2 + 'px';
+    return (
+      pos * squareWidth - (squareWidth + this.person.width! - 1) / 2 + 'px'
+    );
   }
 }
 </script>
-
 
 <style scoped lang="scss">
 article {
@@ -102,7 +106,7 @@ article {
   transition: all 0.6s;
 
   &.hover {
-    z-index:100;
+    z-index: 100;
   }
 
   p {
@@ -117,16 +121,16 @@ article {
       background-repeat: no-repeat;
     }
     &.pengin span {
-      background-image:url(~assets/images/pengin.png);
+      background-image: url(~assets/images/pengin.png);
     }
     &.enemy1 span {
-      background-image:url(~assets/images/enemy1.png);
+      background-image: url(~assets/images/enemy1.png);
     }
     &.enemy2 span {
-      background-image:url(~assets/images/enemy2.png);
+      background-image: url(~assets/images/enemy2.png);
     }
     &.enemy3 span {
-      background-image:url(~assets/images/enemy3.png);
+      background-image: url(~assets/images/enemy3.png);
     }
   }
 
@@ -143,7 +147,7 @@ article {
     animation: burn 1.6s linear;
 
     &::after {
-      content: "";
+      content: '';
       display: block;
       position: absolute;
       left: -30px;
@@ -203,17 +207,18 @@ article {
     @at-root article.hover .person_info {
       visibility: visible;
       opacity: 1;
-      box-shadow:1px 1px 4px rgba(0, 0, 0, .5);
+      box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
       font-family: 'Avenir', sans-serif;
     }
     table {
       width: 160px;
       border-collapse: collapse;
     }
-    th, td {
+    th,
+    td {
       padding: 4px;
-      border:1px solid #999;
-      text-align:left;
+      border: 1px solid #999;
+      text-align: left;
     }
     th {
       width: 1%;
@@ -225,41 +230,93 @@ article {
 }
 
 @keyframes current {
-  0% { transform: translateY(0); }
-  10% { transform: translateY(-1px);  }
-  30% { transform: translateY(-2px); }
-  50% { transform: translateY(-3px); }
-  70% { transform: translateY(-2px); }
-  90% { transform: translateY(-1px);  }
-  100% { transform: translateY(0);  }
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(-1px);
+  }
+  30% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  70% {
+    transform: translateY(-2px);
+  }
+  90% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 @keyframes shake {
-  0% { transform: translate(3px, 2px) rotate(0deg); }
-  10% { transform: translate(-2px, -3px) rotate(-1deg); }
-  20% { transform: translate(-4px, 0px) rotate(1deg); }
-  30% { transform: translate(0px, 3px) rotate(0deg); }
-  40% { transform: translate(2px, -2px) rotate(1deg); }
-  50% { transform: translate(-2px, 3px) rotate(-1deg); }
-  60% { transform: translate(-4px, 2px) rotate(0deg); }
-  70% { transform: translate(3px, 2px) rotate(-1deg); }
-  80% { transform: translate(-2px, -2px) rotate(1deg); }
-  90% { transform: translate(2px, 4px) rotate(0deg); }
-  100% { transform: translate(2px, -3px) rotate(-1deg); }
+  0% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-2px, -3px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-4px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(0px, 3px) rotate(0deg);
+  }
+  40% {
+    transform: translate(2px, -2px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-2px, 3px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-4px, 2px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 2px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-2px, -2px) rotate(1deg);
+  }
+  90% {
+    transform: translate(2px, 4px) rotate(0deg);
+  }
+  100% {
+    transform: translate(2px, -3px) rotate(-1deg);
+  }
 }
 @keyframes burn {
-  0% { filter: brightness(100%); }
-  100% { filter: brightness(20%); }
+  0% {
+    filter: brightness(100%);
+  }
+  100% {
+    filter: brightness(20%);
+  }
 }
 @keyframes burnP {
-  0% { opacity: 0.6; }
-  100% { opacity: 0.3; }
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.3;
+  }
 }
 @keyframes die {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 @keyframes dieHP {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 </style>

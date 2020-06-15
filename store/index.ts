@@ -9,31 +9,151 @@ import {
   Square,
   Board,
   State,
-  ActionContext
+  ActionContext,
 } from 'original';
 import * as firebaseui from 'firebaseui';
 import firebase from '~/plugins/firebase.js';
 const db = firebase.firestore();
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
-let audioCtx: (AudioContext | null) = null;
+let audioCtx: AudioContext | null = null;
 const boardSize = [5, 4];
 const personWidth = 100;
 const peopleData = {
-  'easy' : [
-    {id: 1, name: 'pengin', x: 1, y: 1, direction: 'right', category: 0, character: 'pengin', move: 4, attack: 3, hp: 200, power: 4, hover: false},
-    {id: 2, name: 'enemy1', x: boardSize[0], y: boardSize[1], direction: 'left', category: 1, character: 'enemy1', move: 3, attack: 4, attackType: 'fire', hp: 10, power: 60, hover: false},
+  easy: [
+    {
+      id: 1,
+      name: 'pengin',
+      x: 1,
+      y: 1,
+      direction: 'right',
+      category: 0,
+      character: 'pengin',
+      move: 4,
+      attack: 3,
+      hp: 200,
+      power: 4,
+      hover: false,
+    },
+    {
+      id: 2,
+      name: 'enemy1',
+      x: boardSize[0],
+      y: boardSize[1],
+      direction: 'left',
+      category: 1,
+      character: 'enemy1',
+      move: 3,
+      attack: 4,
+      attackType: 'fire',
+      hp: 10,
+      power: 60,
+      hover: false,
+    },
   ],
-  'normal' : [
-    {id: 1, name: 'pengin', x: 1, y: 1, direction: 'right', category: 0, character: 'pengin', move: 4, attack: 3, hp: 200, power: 4, hover: false},
-    {id: 2, name: 'enemy1', x: boardSize[0], y: boardSize[1], direction: 'left', category: 1, character: 'enemy1', move: 3, attack: 4, attackType: 'fire', hp: 10, power: 60, hover: false},
-    {id: 3, name: 'enemy2', x: boardSize[0] - 1, y: boardSize[1], direction: 'left', category: 1, character: 'enemy2', move: 3, attack: 2, hp: 5, power: 15, hover: false},
+  normal: [
+    {
+      id: 1,
+      name: 'pengin',
+      x: 1,
+      y: 1,
+      direction: 'right',
+      category: 0,
+      character: 'pengin',
+      move: 4,
+      attack: 3,
+      hp: 200,
+      power: 4,
+      hover: false,
+    },
+    {
+      id: 2,
+      name: 'enemy1',
+      x: boardSize[0],
+      y: boardSize[1],
+      direction: 'left',
+      category: 1,
+      character: 'enemy1',
+      move: 3,
+      attack: 4,
+      attackType: 'fire',
+      hp: 10,
+      power: 60,
+      hover: false,
+    },
+    {
+      id: 3,
+      name: 'enemy2',
+      x: boardSize[0] - 1,
+      y: boardSize[1],
+      direction: 'left',
+      category: 1,
+      character: 'enemy2',
+      move: 3,
+      attack: 2,
+      hp: 5,
+      power: 15,
+      hover: false,
+    },
   ],
-  'hard' : [
-    {id: 1, name: 'pengin', x: 1, y: 1, direction: 'right', category: 0, character: 'pengin', move: 4, attack: 3, hp: 200, power: 4, hover: false},
-    {id: 2, name: 'enemy1', x: boardSize[0], y: boardSize[1], direction: 'left', category: 1, character: 'enemy1', move: 3, attack: 4, attackType: 'fire', hp: 10, power: 60, hover: false},
-    {id: 3, name: 'enemy2', x: boardSize[0] - 1, y: boardSize[1], direction: 'left', category: 1, character: 'enemy2', move: 3, attack: 2, hp: 5, power: 15, hover: false},
-    {id: 4, name: 'enemy3', x: boardSize[0], y: boardSize[1] - 1, direction: 'left', category: 1, character: 'enemy3', move: 3, attack: 2, hp: 5, power: 15, hover: false},
+  hard: [
+    {
+      id: 1,
+      name: 'pengin',
+      x: 1,
+      y: 1,
+      direction: 'right',
+      category: 0,
+      character: 'pengin',
+      move: 4,
+      attack: 3,
+      hp: 200,
+      power: 4,
+      hover: false,
+    },
+    {
+      id: 2,
+      name: 'enemy1',
+      x: boardSize[0],
+      y: boardSize[1],
+      direction: 'left',
+      category: 1,
+      character: 'enemy1',
+      move: 3,
+      attack: 4,
+      attackType: 'fire',
+      hp: 10,
+      power: 60,
+      hover: false,
+    },
+    {
+      id: 3,
+      name: 'enemy2',
+      x: boardSize[0] - 1,
+      y: boardSize[1],
+      direction: 'left',
+      category: 1,
+      character: 'enemy2',
+      move: 3,
+      attack: 2,
+      hp: 5,
+      power: 15,
+      hover: false,
+    },
+    {
+      id: 4,
+      name: 'enemy3',
+      x: boardSize[0],
+      y: boardSize[1] - 1,
+      direction: 'left',
+      category: 1,
+      character: 'enemy3',
+      move: 3,
+      attack: 2,
+      hp: 5,
+      power: 15,
+      hover: false,
+    },
   ],
 };
 const initialState: State = {
@@ -57,11 +177,11 @@ function getAvailableArr(state: State, p: Person, scene: Scene) {
   ];
   let availableArr: AvailableArr = [];
   const availableObj: AvailableObj = {};
-  const distance = (scene === 'move') ? p.move : p.attack;
+  const distance = scene === 'move' ? p.move : p.attack;
   for (let i = 0; i < distance; i++) {
-    if(i === 0) {
+    if (i === 0) {
       setAvailableObj(p.x, p.y);
-    }else{
+    } else {
       availableArr.forEach((pos) => {
         if (pos !== undefined) {
           setAvailableObj(pos[0], pos && pos[1]);
@@ -78,15 +198,18 @@ function getAvailableArr(state: State, p: Person, scene: Scene) {
       const _x = String(x);
       const _y = String(y);
 
-      if(x > 0 && x <= boardSize[0] && y > 0 && y <= boardSize[1]) {
-        if(!availableObj[_x]) {
+      if (x > 0 && x <= boardSize[0] && y > 0 && y <= boardSize[1]) {
+        if (!availableObj[_x]) {
           availableObj[_x] = {};
         }
-        if(!availableObj[_x][_y]) {
-          const person = getPersonFromSquare(state.people, getSquareFromPosition(state.board, x, y));
-          if(person !== undefined){
+        if (!availableObj[_x][_y]) {
+          const person = getPersonFromSquare(
+            state.people,
+            getSquareFromPosition(state.board, x, y)
+          );
+          if (person !== undefined) {
             availableObj[_x][_y] = person.category ? 'enemy' : 'us';
-          }else{
+          } else {
             availableObj[_x][_y] = 'focused';
           }
         }
@@ -124,7 +247,10 @@ function getPersonIndexFromId(people: People, id: number) {
 }
 function sound(filename: string) {
   // Audio 用の buffer を読み込む
-  const getAudioBuffer = function(url: string, fn: (buffer: AudioBuffer) => void) {
+  const getAudioBuffer = function (
+    url: string,
+    fn: (buffer: AudioBuffer) => void
+  ) {
     if (audioCtx === null) {
       audioCtx = new AudioContext();
     }
@@ -133,11 +259,11 @@ function sound(filename: string) {
     // array buffer を指定
     req.responseType = 'arraybuffer';
 
-    req.onreadystatechange = function() {
+    req.onreadystatechange = function () {
       if (req.readyState === 4) {
         if (req.status === 0 || req.status === 200) {
           // array buffer を audio buffer に変換
-          audioCtx!.decodeAudioData(req.response, function(buffer) {
+          audioCtx!.decodeAudioData(req.response, function (buffer) {
             // コールバックを実行
             fn(buffer);
           });
@@ -150,7 +276,7 @@ function sound(filename: string) {
   };
 
   // サウンドを再生
-  const playSound = function(buffer: AudioBuffer) {
+  const playSound = function (buffer: AudioBuffer) {
     if (audioCtx!.state === 'closed') {
       audioCtx = null;
       audioCtx = new AudioContext();
@@ -165,48 +291,58 @@ function sound(filename: string) {
     source.start(0);
   };
 
-  getAudioBuffer('audio/' + filename + '.mp3', function(buffer: AudioBuffer) {
+  getAudioBuffer('audio/' + filename + '.mp3', function (buffer: AudioBuffer) {
     playSound(buffer);
   });
 }
 
 function setUserData(state: State) {
-  db.collection('users').doc(state.userId).set({
-    [state.level]: state
-  }, { merge: true })
-  .then(function() {
-      console.log("user data is changed.");
-  })
-  .catch(function(error) {
-      console.error("Error writing document: ", error);
-  });
+  db.collection('users')
+    .doc(state.userId)
+    .set(
+      {
+        [state.level]: state,
+      },
+      { merge: true }
+    )
+    .then(function () {
+      console.log('user data is changed.');
+    })
+    .catch(function (error) {
+      console.error('Error writing document: ', error);
+    });
 }
 function resetUserData(state: State) {
-  db.collection('users').doc(state.userId).set({
-    [state.level]: initialState
-  }, { merge: true })
-  .then(function() {
-      console.log("user data is reset.");
-  })
-  .catch(function(error) {
-      console.error("Error writing document: ", error);
-  });
+  db.collection('users')
+    .doc(state.userId)
+    .set(
+      {
+        [state.level]: initialState,
+      },
+      { merge: true }
+    )
+    .then(function () {
+      console.log('user data is reset.');
+    })
+    .catch(function (error) {
+      console.error('Error writing document: ', error);
+    });
 }
 
-export const state = () => ({...initialState})
+export const state = () => ({ ...initialState });
 
 export const getters = {
   levels() {
     return Object.keys(peopleData);
-  } 
-}
+  },
+};
 
 // 状態を変更する処理は mutationとしてexportする
 export const mutations = {
-  setUserId (state: State, uid: string) {
+  setUserId(state: State, uid: string) {
     state.userId = uid;
   },
-  setBoard (state: State) {
+  setBoard(state: State) {
     const squareWidth = 160;
     const board = [];
     let counter = 0;
@@ -221,22 +357,21 @@ export const mutations = {
           style: {
             width: squareWidth + 'px',
             height: squareWidth + 'px',
-          }
+          },
         });
       }
     }
     state.board = board;
-    state.boardStyle = {width: boardSize[0] * squareWidth + 1 + 'px'};
+    state.boardStyle = { width: boardSize[0] * squareWidth + 1 + 'px' };
   },
-  setPeople (state: State, payload: {newState: State, level: Level}) {
-    const {newState, level} = payload;
+  setPeople(state: State, payload: { newState: State; level: Level }) {
+    const { newState, level } = payload;
     state.level = level;
 
-    const people = (
-      newState &&
-      newState.people &&
-      newState.people.length
-    ) ? newState.people : peopleData[level];
+    const people =
+      newState && newState.people && newState.people.length
+        ? newState.people
+        : peopleData[level];
 
     people.forEach((p: Person) => {
       p.maxhp = p.hp;
@@ -247,16 +382,17 @@ export const mutations = {
       p.class = '';
       p.classP = p.character;
       p.styleSpan = {
-        backgroundSize: String(personWidth) + 'px ' + String(personWidth) + 'px',
+        backgroundSize:
+          String(personWidth) + 'px ' + String(personWidth) + 'px',
       };
       p.styleHP = {
-        width : String(personWidth) + 'px'
+        width: String(personWidth) + 'px',
       };
     });
     state.people = people;
     setUserData(state);
   },
-  moveFocus (state: State, person: Person) {
+  moveFocus(state: State, person: Person) {
     state.board.forEach((s) => {
       s.layer = null;
     });
@@ -272,13 +408,13 @@ export const mutations = {
     person.class = 'current';
     setUserData(state);
   },
-  move (state: State, target: Square) {
+  move(state: State, target: Square) {
     state.board.forEach((s) => {
       s.layer = null;
     });
     const p = getPersonFromId(state.people, state.currentPerson);
     let phase = state.phase;
-    if(state.currentPerson === state.people.length - 1) {
+    if (state.currentPerson === state.people.length - 1) {
       phase++;
     }
     delete getSquareFromPosition(state.board, p.x, p.y).personId;
@@ -288,7 +424,7 @@ export const mutations = {
     state.scene = 'move';
     state.phase = phase;
   },
-  attackFocus (state: State, person: Person) {
+  attackFocus(state: State, person: Person) {
     state.board.forEach((s) => {
       s.layer = null;
     });
@@ -300,155 +436,170 @@ export const mutations = {
     state.scene = 'attackfocus';
     setUserData(state);
   },
-  attack (state: State, action: {me: CurrentPerson, target: Square | null}) {
-    attackAsync().then(function() {
-      const currentPersonId = getPersonIndexFromId(state.people, state.currentPerson);
+  attack(state: State, action: { me: CurrentPerson; target: Square | null }) {
+    attackAsync().then(function () {
+      const currentPersonId = getPersonIndexFromId(
+        state.people,
+        state.currentPerson
+      );
       let currentPerson;
-      if(currentPersonId !== state.people.length - 1){
+      if (currentPersonId !== state.people.length - 1) {
         currentPerson = state.people[currentPersonId + 1].id;
-      }else{
+      } else {
         currentPerson = 1;
       }
       state.currentPerson = currentPerson;
     });
 
     function attackAsync() {
-      return new Promise(function(resolve) {
-        if(action.target !== null){
+      return new Promise(function (resolve) {
+        if (action.target !== null) {
           const target = getPersonFromSquare(state.people, action.target);
           const _me = getPersonFromId(state.people, action.me);
-          const _class = (_me.attackType === 'fire') ? 'burned' : 'attacked';
+          const _class = _me.attackType === 'fire' ? 'burned' : 'attacked';
           sound(_class);
           target.hp -= _me.power;
           if (target.x < _me.x) {
             _me.direction = 'left';
-          } else if(target.x > _me.x) {
+          } else if (target.x > _me.x) {
             _me.direction = 'right';
           }
-          if(target.hp > 0){
+          if (target.hp > 0) {
             target.class = _class;
             resolve();
-          }else{
-            const _deadClass = (_me.attackType === 'fire') ? 'burnDead' : 'dead';
-            const _time = (_deadClass === 'burnDead') ? 1400 : 400;
+          } else {
+            const _deadClass = _me.attackType === 'fire' ? 'burnDead' : 'dead';
+            const _time = _deadClass === 'burnDead' ? 1400 : 400;
             target.class = _class + ' ' + _deadClass;
-            setTimeout(function(){
-              state.people.splice(getPersonIndexFromId(state.people, target.id), 1);
+            setTimeout(function () {
+              state.people.splice(
+                getPersonIndexFromId(state.people, target.id),
+                1
+              );
               resolve();
             }, _time);
           }
-        }else{
+        } else {
           resolve();
         }
       });
     }
-  }
-}
+  },
+};
 
 export const actions = {
-  showLoginForm () {
-    const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth());
+  showLoginForm() {
+    const ui =
+      firebaseui.auth.AuthUI.getInstance() ||
+      new firebaseui.auth.AuthUI(firebase.auth());
     ui.start('#firebaseui-auth-container', {
       signInSuccessUrl: '/',
       signInOptions: [
         // List of OAuth providers supported.
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      ]
+      ],
     });
   },
-  setUserId ({commit}: ActionContext, uid: string) {
+  setUserId({ commit }: ActionContext, uid: string) {
     commit('setUserId', uid);
   },
-  setBoard ({commit}: ActionContext) {
+  setBoard({ commit }: ActionContext) {
     commit('setBoard');
   },
-  setPeople ({commit, state}: ActionContext, level: Level) {
-    db.collection('users').doc(state.userId).get()
-    .then(doc => {
-      if (doc.exists) {
-        const _state = doc.data()![level];
-        if (_state && _state.level !== '') {
-          console.log("user data exists.");
-          commit('setPeople', {
-            newState: _state,
-            level: _state.level,
-          });
+  setPeople({ commit, state }: ActionContext, level: Level) {
+    db.collection('users')
+      .doc(state.userId)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          const _state = doc.data()![level];
+          if (_state && _state.level !== '') {
+            console.log('user data exists.');
+            commit('setPeople', {
+              newState: _state,
+              level: _state.level,
+            });
+          } else {
+            console.log('user data is initialized.');
+            commit('setPeople', {
+              newState: null,
+              level,
+            });
+          }
         } else {
-          console.log("user data is initialized.");
+          console.log('user data is null.');
           commit('setPeople', {
             newState: null,
             level,
           });
         }
-      } else {
-        console.log("user data is null.");
-        commit('setPeople', {
-          newState: null,
-          level,
-        });
-      }
-    }).catch(error => {
-      console.log("Error getting document:", error);
-    });
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
   },
-  moveFocus ({commit}: ActionContext, person: Person) {
+  moveFocus({ commit }: ActionContext, person: Person) {
     commit('moveFocus', person);
   },
-  squareClick ({commit, state}: ActionContext, square: Square) {
-    if(state.scene === 'movefocus') {
-      if(square.layer === 'focused'){
+  squareClick({ commit, state }: ActionContext, square: Square) {
+    if (state.scene === 'movefocus') {
+      if (square.layer === 'focused') {
         commit('move', square);
-        setTimeout(function(){
+        setTimeout(function () {
           _attackFocus(state);
         }, 800);
-      }else if(square.layer === 'current'){
+      } else if (square.layer === 'current') {
         _attackFocus(state);
       }
-    }else if(square.layer === (state.turn ? 'us' : 'enemy')){
-        commit('attack', {me:state.currentPerson, target:square});
-        const person = getPersonFromId(state.people, state.currentPerson);
-        const _attackTime = (person.attackType === 'fire') ? 1000 : 0;
-        setTimeout(function(){
-          const nextPerson = getPersonFromId(state.people, state.currentPerson);
-          const categoryArr = [0, 0];
-          state.people.forEach((p) => {
-            categoryArr[p.category]++;
+    } else if (square.layer === (state.turn ? 'us' : 'enemy')) {
+      commit('attack', { me: state.currentPerson, target: square });
+      const person = getPersonFromId(state.people, state.currentPerson);
+      const _attackTime = person.attackType === 'fire' ? 1000 : 0;
+      setTimeout(function () {
+        const nextPerson = getPersonFromId(state.people, state.currentPerson);
+        const categoryArr = [0, 0];
+        state.people.forEach((p) => {
+          categoryArr[p.category]++;
+        });
+        if (categoryArr[0] === 0) {
+          resetUserData(state);
+          audioCtx!.close();
+          audioCtx = null;
+          alert('YOU LOSE...');
+          const $restart = <HTMLElement>document.querySelector('.restart');
+          $restart.style.display = 'flex';
+        } else if (categoryArr[1] === 0) {
+          resetUserData(state);
+          audioCtx!.close().then(function () {
+            sound('win');
+            setTimeout(function () {
+              alert('YOU WIN!');
+              const $restart = <HTMLElement>document.querySelector('.restart');
+              $restart.style.display = 'flex';
+            }, 500);
           });
-          if(categoryArr[0] === 0){
-            resetUserData(state);
-            audioCtx!.close();
-            audioCtx = null;
-            alert('YOU LOSE...');
-            const $restart = <HTMLElement>document.querySelector('.restart');
-            $restart.style.display = 'flex';
-          }else if(categoryArr[1] === 0){
-            resetUserData(state);
-            audioCtx!.close().then(function() {
-              sound('win');
-              setTimeout(function() {
-                alert('YOU WIN!');
-                const $restart = <HTMLElement>document.querySelector('.restart');
-                $restart.style.display = 'flex';
-              }, 500);
-            });
-          }else{
-            _next(nextPerson);
-          }
-        }, _attackTime + 600);
-      }
+        } else {
+          _next(nextPerson);
+        }
+      }, _attackTime + 600);
+    }
 
     function _attackFocus(state: State) {
       const person = getPersonFromId(state.people, state.currentPerson);
       const attackArea = getAvailableArr(state, person, 'attack');
       commit('attackFocus', person);
-      if(attackArea.filter((pos) => pos && pos[2] === (state.turn ? 'us' : 'enemy'))[0] === undefined) {
-        commit('attack', {me:state.currentPerson, target: null});
-        setTimeout(function(){
+      if (
+        attackArea.filter(
+          (pos) => pos && pos[2] === (state.turn ? 'us' : 'enemy')
+        )[0] === undefined
+      ) {
+        commit('attack', { me: state.currentPerson, target: null });
+        setTimeout(function () {
           const nextPerson = getPersonFromId(state.people, state.currentPerson);
           _next(nextPerson);
         }, 200);
-      }else if(person.category === 1) {
-        setTimeout(function(){
+      } else if (person.category === 1) {
+        setTimeout(function () {
           const focusedList = document.querySelectorAll('.board li.us');
           const num = Math.floor(focusedList.length * Math.random());
           const $elem = <HTMLElement>focusedList[num];
@@ -459,8 +610,8 @@ export const actions = {
 
     function _next(nextPerson: Person) {
       commit('moveFocus', nextPerson);
-      if(nextPerson.category === 1) {
-        setTimeout(function(){
+      if (nextPerson.category === 1) {
+        setTimeout(function () {
           const focusedList = document.querySelectorAll('.board li.focused');
           const num = Math.floor(focusedList.length * Math.random());
           const $elem = <HTMLElement>focusedList[num];
@@ -470,12 +621,12 @@ export const actions = {
     }
   },
   // eslint-disable-next-line no-empty-pattern
-  sound ({}: ActionContext, filename: string) {
+  sound({}: ActionContext, filename: string) {
     sound(filename);
   },
-  firebaseSignIn () {
-    return new Promise(resolve => {
-      firebase.auth().onAuthStateChanged(function(user) {
+  firebaseSignIn() {
+    return new Promise((resolve) => {
+      firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           console.log('User is signed in.');
           resolve(user);
@@ -486,14 +637,18 @@ export const actions = {
       });
     });
   },
-  firebaseSignOut () {
-    firebase.auth().signOut().then(function() {
-      console.log('Sign-out successful.');
-      window.location.href = '/';
-    }).catch(function(error) {
-      console.log(error);
-    });
-  }
-}
+  firebaseSignOut() {
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        console.log('Sign-out successful.');
+        window.location.href = '/';
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+};
 
-export const strict = false
+export const strict = false;

@@ -1,18 +1,18 @@
-import { withInfo } from 'storybook-addon-vue-info'
+import { withInfo } from 'storybook-addon-vue-info';
 
 export default {
   title: 'VButton',
   decorators: [withInfo],
   parameters: {
     info: {},
-    notes: 'This uses Vuetify.'
-  }
-}
+    notes: 'This uses Vuetify.',
+  },
+};
 
 export const SignOut = () => ({
-  template: `<v-btn>SignOut</v-btn>`
-})
+  template: `<v-btn>SignOut</v-btn>`,
+});
 
 export const Retry = () => ({
-  template: `<v-btn>Retry</v-btn>`
-})
+  template: `<v-btn>Retry</v-btn>`,
+});

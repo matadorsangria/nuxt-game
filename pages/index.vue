@@ -14,54 +14,66 @@
             @defaultOverlayHide="defaultOverlayHide"
           />
         </p>
-        <p class="sound-alert">Sound will be played, so pay attention to volume.</p>
-        <v-btn @click="firebaseSignOut">Sign Out</v-btn>
+        <p class="sound-alert">
+          Sound will be played, so pay attention to volume.
+        </p>
+        <v-btn @click="firebaseSignOut">
+          Sign Out
+        </v-btn>
       </div>
     </div>
     <div class="overlay restart">
       <div>
         <p>
-          <v-btn @click="reload">Retry</v-btn>
+          <v-btn @click="reload">
+            Retry
+          </v-btn>
         </p>
       </div>
     </div>
   </div>
   <div v-else>
-    <div id="firebaseui-auth-container"></div>
+    <div id="firebaseui-auth-container" />
   </div>
 </template>
 
 <script lang="ts">
-import firebase from 'firebase'
-import { Component, Vue } from 'nuxt-property-decorator'
-import { mapActions, mapGetters } from 'vuex'
+import firebase from 'firebase';
+import { Component, Vue } from 'nuxt-property-decorator';
+import { mapActions, mapGetters } from 'vuex';
 import 'firebaseui/dist/firebaseui.css';
-import Board from '~/components/organisms/Board.vue'
-import People from '~/components/organisms/People.vue'
-import StartButton from '~/components/molecules/StartButton.vue'
+import Board from '~/components/organisms/Board.vue';
+import People from '~/components/organisms/People.vue';
+import StartButton from '~/components/molecules/StartButton.vue';
 
 @Component({
   components: {
     Board,
     People,
-    StartButton
+    StartButton,
   },
   computed: {
-    ...mapGetters(['levels'])
+    ...mapGetters(['levels']),
   },
   methods: {
-    ...mapActions(['firebaseSignIn', 'firebaseSignOut', 'setUserId', 'setBoard', 'showLoginForm'])
-  }
+    ...mapActions([
+      'firebaseSignIn',
+      'firebaseSignOut',
+      'setUserId',
+      'setBoard',
+      'showLoginForm',
+    ]),
+  },
 })
 export default class IndexVue extends Vue {
-  firebaseSignIn!: () => Promise<firebase.User>
-  setUserId!: (uid: string) => void
-  setBoard!: () => void
-  showLoginForm!: () => void
-  isAuth = false
+  firebaseSignIn!: () => Promise<firebase.User>;
+  setUserId!: (uid: string) => void;
+  setBoard!: () => void;
+  showLoginForm!: () => void;
+  isAuth = false;
 
-  created(){
-    this.firebaseSignIn().then(user => {
+  created() {
+    this.firebaseSignIn().then((user) => {
       if (user !== null) {
         this.isAuth = true;
         this.setUserId(user.uid);
@@ -84,13 +96,12 @@ export default class IndexVue extends Vue {
 }
 </script>
 
-
 <style scoped lang="scss">
 .stage {
   position: relative;
   background: url(~assets/images/burned.gif) no-repeat 0 -5000px;
 
-  @media screen and (max-width:640px) {
+  @media screen and (max-width: 640px) {
     transform: scale(0.4);
   }
 }

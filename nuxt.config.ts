@@ -13,11 +13,11 @@ const nuxtConfig: Configuration = {
   head: {
     title: process.env.npm_package_name,
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
-      { charset: 'utf-8' },    
-      { name: 'robots', content: 'noindex , nofollow' },
+      { charset: 'utf-8' },
+      { name: 'robots', content: 'noindex, nofollow' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
@@ -25,21 +25,12 @@ const nuxtConfig: Configuration = {
         content: `${process.env.npm_package_description}`
       }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   loading: { color: '#FFFFFF' },
-  css: [
-    '~/assets/css/main.scss'
-  ],
-  plugins: [
-    '~/plugins/firebase'
-  ],
-  modules: [
-    '@nuxtjs/dotenv',
-    '@nuxtjs/vuetify'
-  ],
+  css: ['~/assets/css/main.scss'],
+  plugins: ['~/plugins/firebase'],
+  modules: ['@nuxtjs/dotenv', '@nuxtjs/vuetify'],
   build: {
     extend(config, { isDev, isClient }) {
       if (!config.performance) return;
@@ -63,15 +54,14 @@ const nuxtConfig: Configuration = {
             require.resolve('@nuxt/babel-preset-app'),
             {
               buildTarget: isServer ? 'server' : 'client',
-              corejs: { version: 3 }
-            }
-          ]
-        ]
-      }
-    }
+              corejs: { version: 3 },
+            },
+          ],
+        ];
+      },
+    },
   },
-
   buildModules: ['@nuxt/typescript-build'],
+};
 
-}
 module.exports = nuxtConfig;

@@ -12,17 +12,17 @@
 </template>
 
 <script>
-import { Component, Vue } from 'nuxt-property-decorator'
-import { mapState } from 'vuex'
-import Square from '../molecules/Square.vue'
+import { Component, Vue } from 'nuxt-property-decorator';
+import { mapState } from 'vuex';
+import Square from '../molecules/Square.vue';
 
 @Component({
   components: {
-    Square
+    Square,
   },
   computed: {
-    ...mapState(['board', 'boardStyle', 'turn', 'scene'])
-  }
+    ...mapState(['board', 'boardStyle', 'turn', 'scene']),
+  },
 })
 export default class BoardVue extends Vue {}
 </script>
@@ -53,7 +53,7 @@ ul {
       cursor: pointer;
 
       &:hover {
-        box-shadow:0px 0px 6px 3px #aff inset;
+        box-shadow: 0px 0px 6px 3px #aff inset;
       }
     }
     .scene_attackfocus &.focused {
@@ -73,7 +73,7 @@ ul {
       background: #eee;
 
       &:hover {
-        box-shadow:0px 0px 6px 3px #faf inset;
+        box-shadow: 0px 0px 6px 3px #faf inset;
       }
     }
   }

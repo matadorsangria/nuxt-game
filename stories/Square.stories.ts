@@ -1,5 +1,5 @@
-import Vuex from 'vuex'
-import { withInfo } from 'storybook-addon-vue-info'
+import Vuex from 'vuex';
+import { withInfo } from 'storybook-addon-vue-info';
 import Board from '../components/organisms/Board.vue';
 
 export default {
@@ -7,14 +7,14 @@ export default {
   decorators: [withInfo],
   parameters: {
     info: {},
-    notes: 'Square highly depends on Board.'
-  }
-}
+    notes: 'Square highly depends on Board.',
+  },
+};
 
 export const Default = () => ({
   components: { Board },
-  template: `<board></board>`
-})
+  template: `<board></board>`,
+});
 
 export const Current = () => ({
   components: { Board },
@@ -34,16 +34,16 @@ export const Current = () => ({
           layer: 'current',
           style: {
             width: '160px',
-            height: '160px'
-          }
-        }
-      ]
+            height: '160px',
+          },
+        },
+      ],
     },
     actions: {
-      squareClick: () => {}
-    }
-  })
-})
+      squareClick: () => {},
+    },
+  }),
+});
 
 export const Focused = () => ({
   components: { Board },
@@ -63,13 +63,13 @@ export const Focused = () => ({
           layer: 'focused',
           style: {
             width: '160px',
-            height: '160px'
-          }
-        }
-      ]
+            height: '160px',
+          },
+        },
+      ],
     },
     actions: {
-      squareClick: () => {}
-    }
-  })
-})
+      squareClick: () => {},
+    },
+  }),
+});
