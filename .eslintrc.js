@@ -5,22 +5,27 @@ module.exports = {
     node: true
   },
   parser: 'vue-eslint-parser',
-  parserOptions: {
-    parser: '@typescript-eslint/parser'
-  },
   extends: [
     '@nuxtjs/eslint-config-typescript',
     'plugin:nuxt/recommended',
-    'prettier',
-    'prettier/vue',
-    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended'
   ],
-  plugins: [
-    'prettier',
-    '@typescript-eslint'
-  ],
-  // add your custom rules here
   rules: {
+    'vue/max-attributes-per-line': 'off',
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always',
+        }
+      }
+    ],
+    'prettier/prettier': [
+      'warn',
+      {
+        singleQuote: true
+      }
+    ],
     "no-console": "off"
   }
 }

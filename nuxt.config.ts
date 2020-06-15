@@ -1,27 +1,17 @@
-import { Configuration } from 'webpack'
+import { Configuration } from '@nuxt/types';
 
-const pkg = require('./package')
-
-module.exports = {
+const nuxtConfig: Configuration = {
   mode: 'spa',
-
-  /*
-  ** Define the project ENV variables
-  */
   env: {
-    FB_API_KEY: process.env.FB_API_KEY,
-    FB_AUTH_DOMAIN: process.env.FB_AUTH_DOMAIN,
-    FB_DATABASE_URL: process.env.FB_DATABASE_URL,
-    FB_PROJECTID: process.env.FB_PROJECTID,
-    FB_STORAGE_BUCKET: process.env.FB_STORAGE_BUCKET,
-    FB_MESSAGING_SENDER_ID: process.env.FB_MESSAGING_SENDER_ID
+    FB_API_KEY: process.env.FB_API_KEY!,
+    FB_AUTH_DOMAIN: process.env.FB_AUTH_DOMAIN!,
+    FB_DATABASE_URL: process.env.FB_DATABASE_URL!,
+    FB_PROJECTID: process.env.FB_PROJECTID!,
+    FB_STORAGE_BUCKET: process.env.FB_STORAGE_BUCKET!,
+    FB_MESSAGING_SENDER_ID: process.env.FB_MESSAGING_SENDER_ID!,
   },
-
-  /*
-  ** Headers of the page
-  */
   head: {
-    title: pkg.name,
+    title: process.env.npm_package_name,
     htmlAttrs: {
       lang: 'en'
     },
@@ -29,51 +19,45 @@ module.exports = {
       { charset: 'utf-8' },    
       { name: 'robots', content: 'noindex , nofollow' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      {
+        hid: 'description',
+        name: 'description',
+        content: `${process.env.npm_package_description}`
+      }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
-  /*
-  ** Customize the progress-bar color
-  */
   loading: { color: '#FFFFFF' },
-
-  /*
-  ** Global CSS
-  */
   css: [
     '~/assets/css/main.scss'
   ],
-
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [
     '~/plugins/firebase'
   ],
-
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
     '@nuxtjs/dotenv',
     '@nuxtjs/vuetify'
   ],
-
-  /*
-  ** Build configuration
-  */
   build: {
-    extend(config: Configuration) {
-      if(!config.performance) return;
+    extend(config, { isDev, isClient }) {
+      if (!config.performance) return;
       config.performance.maxAssetSize = 1200000;
       config.performance.maxEntrypointSize = 1500000;
+      if (isDev && isClient) {
+        if (config.module) {
+          config.module.rules.push({
+            enforce: 'pre',
+            test: /\.(ts|js|vue)$/,
+            loader: 'eslint-loader',
+            exclude: /(node_modules)/,
+          });
+        }
+      }
     },
     babel: {
-      presets({ isServer } : { isServer: boolean }) {
+      presets({ isServer }) {
         return [
           [
             require.resolve('@nuxt/babel-preset-app'),
@@ -89,7 +73,5 @@ module.exports = {
 
   buildModules: ['@nuxt/typescript-build'],
 
-  extends: [
-    '@nuxtjs/eslint-config-typescript'
-  ]
 }
+module.exports = nuxtConfig;
