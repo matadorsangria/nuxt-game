@@ -12,7 +12,7 @@ import {
   ActionContext,
 } from 'original';
 import * as firebaseui from 'firebaseui';
-import firebase from '~/plugins/firebase.js';
+import firebase from '~/plugins/firebase';
 const db = firebase.firestore();
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
