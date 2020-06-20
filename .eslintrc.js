@@ -2,13 +2,13 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
   },
   parser: 'vue-eslint-parser',
   extends: [
     '@nuxtjs/eslint-config-typescript',
     'plugin:nuxt/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   rules: {
     'vue/max-attributes-per-line': 'off',
@@ -17,15 +17,15 @@ module.exports = {
       {
         html: {
           void: 'always',
-        }
-      }
+        },
+      },
     ],
     'prettier/prettier': [
       'warn',
       {
-        singleQuote: true
-      }
+        singleQuote: true,
+      },
     ],
-    "no-console": "off"
-  }
-}
+    'no-console': 'off',
+  },
+};
