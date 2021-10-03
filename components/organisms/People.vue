@@ -11,17 +11,22 @@
 </template>
 
 <script>
-import { Component, Vue } from 'nuxt-property-decorator';
-import { mapState } from 'vuex';
+import { defineComponent, computed, useStore } from '@nuxtjs/composition-api';
 import Person from '../molecules/Person.vue';
 
-@Component({
+export default defineComponent({
   components: {
     Person,
   },
-  computed: {
-    ...mapState(['people', 'board']),
+  setup() {
+    const store = useStore();
+    const people = computed(() => store.state.people);
+    const board = computed(() => store.state.board);
+
+    return {
+      people,
+      board,
+    };
   },
-})
-export default class PeopleVue extends Vue {}
+});
 </script>

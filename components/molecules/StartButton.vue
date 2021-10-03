@@ -6,31 +6,34 @@
 
 <script lang="ts">
 import { Level } from 'original';
-import { Component, Prop, Vue } from 'nuxt-property-decorator';
-import { mapActions } from 'vuex';
+import { defineComponent, useStore, PropType } from '@nuxtjs/composition-api';
 
-@Component({
-  methods: {
-    ...mapActions(['sound', 'setPeople']),
+export default defineComponent({
+  props: {
+    level: {
+      type: String as PropType<Level>,
+      required: true,
+    },
   },
-})
-export default class StartButtonVue extends Vue {
-  sound!: (filename: string) => void;
-  setPeople!: (level: Level) => void;
+  setup(_, context) {
+    const store = useStore();
 
-  @Prop({ type: String, required: true })
-  level!: Level;
+    const colorObj = {
+      easy: 'green',
+      normal: 'yellow',
+      hard: 'red',
+    };
 
-  colorObj = {
-    easy: 'green',
-    normal: 'yellow',
-    hard: 'red',
-  };
+    const onClick = (level: Level) => {
+      context.emit('defaultOverlayHide');
+      store.dispatch('sound', 'bgm');
+      store.dispatch('setPeople', level);
+    };
 
-  onClick(level: Level) {
-    this.$emit('defaultOverlayHide');
-    this.sound('bgm');
-    this.setPeople(level);
-  }
-}
+    return {
+      colorObj,
+      onClick,
+    };
+  },
+});
 </script>

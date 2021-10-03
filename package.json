@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.4.10",
+    "@nuxtjs/composition-api": "^0.29.2",
     "@nuxtjs/dotenv": "^1.4.1",
     "firebase": "^7.15.3",
     "firebaseui": "^4.5.1",
-    "nuxt": "^2.13.0",
-    "nuxt-property-decorator": "^2.7.2"
+    "nuxt": "^2.13.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^1.0.3",

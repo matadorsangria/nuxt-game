@@ -4,26 +4,36 @@
 
 <script lang="ts">
 import { Square } from 'original';
-import { Component, Prop, Vue } from 'nuxt-property-decorator';
-import { mapActions } from 'vuex';
+import {
+  defineComponent,
+  ref,
+  watchEffect,
+  useStore,
+  PropType,
+} from '@nuxtjs/composition-api';
 
-@Component({
-  methods: {
-    ...mapActions(['squareClick']),
+export default defineComponent({
+  props: {
+    square: {
+      type: Object as PropType<Square>,
+      required: true,
+    },
   },
-})
-export default class SquareVue extends Vue {
-  squareClick!: (square: Square) => void;
+  setup(props) {
+    const store = useStore();
+    const className = ref(props.square.layer);
+    const onClick = () => {
+      store.dispatch('squareClick', props.square);
+    };
 
-  @Prop({ type: Object, required: true })
-  square!: Square;
+    watchEffect(() => {
+      className.value = props.square.layer;
+    });
 
-  get className() {
-    return this.square.layer;
-  }
-
-  onClick() {
-    this.squareClick(this.square);
-  }
-}
+    return {
+      className,
+      onClick,
+    };
+  },
+});
 </script>

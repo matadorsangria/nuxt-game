@@ -61,7 +61,7 @@ const nuxtConfig: Configuration = {
       },
     },
   },
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module'],
 };
 
 module.exports = nuxtConfig;

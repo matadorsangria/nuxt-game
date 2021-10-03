@@ -42,62 +42,74 @@
 
 <script lang="ts">
 import { Person, Board } from 'original';
-import { Component, Prop, Vue } from 'nuxt-property-decorator';
-import { mapActions } from 'vuex';
+import {
+  defineComponent,
+  ref,
+  reactive,
+  watch,
+  useStore,
+  PropType,
+} from '@nuxtjs/composition-api';
 
-@Component({
-  methods: {
-    ...mapActions(['moveFocus']),
+export default defineComponent({
+  props: {
+    person: {
+      type: Object as PropType<Person>,
+      required: true,
+    },
+    board: {
+      type: Array as PropType<Board>,
+      required: true,
+    },
   },
-})
-export default class PersonVue extends Vue {
-  moveFocus!: (person: Person) => void;
-
-  @Prop({ type: Object, required: true })
-  person!: Person;
-
-  @Prop({ type: Array, required: true })
-  board!: Board;
-
-  isHover = false;
-
-  get styleArticle() {
-    return {
-      left: this.calcPosition(this.person.x),
-      top: this.calcPosition(this.person.y),
+  setup(props) {
+    const store = useStore();
+    const isHover = ref(false);
+    const calcPosition = (pos: number) => {
+      const squareWidth = props.board[0].width;
+      return (
+        pos * squareWidth - (squareWidth + props.person.width! - 1) / 2 + 'px'
+      );
     };
-  }
 
-  get styleP() {
-    const personWidth = this.person.width;
-    return {
-      width: personWidth + 'px',
-      height: personWidth + 'px',
-      transform: `rotateY(${this.person.direction === 'right' ? 0 : 180}deg)`,
+    const styleArticle = reactive({
+      left: calcPosition(props.person.x),
+      top: calcPosition(props.person.y),
+    });
+
+    const styleP = {
+      width: props.person.width + 'px',
+      height: props.person.width + 'px',
+      transform: `rotateY(${props.person.direction === 'right' ? 0 : 180}deg)`,
     };
-  }
 
-  get styleIndicator() {
-    return {
-      width: (this.person.hp / this.person!.maxhp!) * 100 + '%',
+    const styleIndicator = {
+      width: (props.person.hp / props.person!.maxhp!) * 100 + '%',
       backgroundColor:
-        this.person.hp / this.person!.maxhp! > 0.3 ? 'lime' : 'red',
+        props.person.hp / props.person!.maxhp! > 0.3 ? 'lime' : 'red',
     };
-  }
 
-  created() {
-    if (this.person.id === 1) {
-      this.moveFocus(this.person);
+    if (props.person.id === 1) {
+      store.dispatch('moveFocus', props.person);
     }
-  }
 
-  calcPosition(pos: number) {
-    const squareWidth = this.board[0].width;
-    return (
-      pos * squareWidth - (squareWidth + this.person.width! - 1) / 2 + 'px'
+    watch(
+      () => [props.person.x, props.person.y],
+      (newVal) => {
+        const [x, y] = newVal;
+        styleArticle.left = calcPosition(x);
+        styleArticle.top = calcPosition(y);
+      }
     );
-  }
-}
+
+    return {
+      isHover,
+      styleArticle,
+      styleP,
+      styleIndicator,
+    };
+  },
+});
 </script>
 
 <style scoped lang="scss">

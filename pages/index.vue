@@ -4,7 +4,7 @@
       <Board />
       <People />
     </div>
-    <div ref="defaultOverlay" class="overlay default">
+    <div v-show="defaultOverlayVisible" class="overlay default">
       <div>
         <p class="v-application">
           <StartButton
@@ -38,62 +38,54 @@
 </template>
 
 <script lang="ts">
-import firebase from 'firebase';
-import { Component, Vue } from 'nuxt-property-decorator';
-import { mapActions, mapGetters } from 'vuex';
+import { defineComponent, ref, useStore } from '@nuxtjs/composition-api';
 import 'firebaseui/dist/firebaseui.css';
 import Board from '~/components/organisms/Board.vue';
 import People from '~/components/organisms/People.vue';
 import StartButton from '~/components/molecules/StartButton.vue';
 
-@Component({
+export default defineComponent({
   components: {
     Board,
     People,
     StartButton,
   },
-  computed: {
-    ...mapGetters(['levels']),
-  },
-  methods: {
-    ...mapActions([
-      'firebaseSignIn',
-      'firebaseSignOut',
-      'setUserId',
-      'setBoard',
-      'showLoginForm',
-    ]),
-  },
-})
-export default class IndexVue extends Vue {
-  firebaseSignIn!: () => Promise<firebase.User>;
-  setUserId!: (uid: string) => void;
-  setBoard!: () => void;
-  showLoginForm!: () => void;
-  isAuth = false;
+  setup() {
+    const store = useStore();
+    const isAuth = ref(false);
+    const defaultOverlayVisible = ref(true);
+    const defaultOverlayHide = () => {
+      defaultOverlayVisible.value = false;
+    };
+    const reload = () => {
+      location.reload();
+    };
+    const levels = store.getters.levels;
+    const firebaseSignOut = () => {
+      store.dispatch('firebaseSignOut');
+    };
 
-  created() {
-    this.firebaseSignIn().then((user) => {
+    store.dispatch('firebaseSignIn').then((user) => {
       if (user !== null) {
-        this.isAuth = true;
-        this.setUserId(user.uid);
-        this.setBoard();
+        isAuth.value = true;
+        store.dispatch('setUserId', user.uid);
+        store.dispatch('setBoard');
       } else {
-        this.isAuth = false;
-        this.showLoginForm();
+        isAuth.value = false;
+        store.dispatch('showLoginForm');
       }
     });
-  }
 
-  defaultOverlayHide() {
-    const defaultOverlay = this.$refs.defaultOverlay as HTMLElement;
-    defaultOverlay.style.display = 'none';
-  }
-
-  reload() {
-    location.reload();
-  }
-}
+    return {
+      isAuth,
+      defaultOverlayVisible,
+      defaultOverlayHide,
+      reload,
+      levels,
+      firebaseSignOut,
+    };
+  },
+});
 </script>
 
 <style scoped lang="scss">
