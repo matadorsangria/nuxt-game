@@ -60,14 +60,6 @@ const nuxtConfig: Configuration = {
         ];
       },
     },
-    loaders: {
-      scss: {
-        implementation: require('sass'),
-        sassOptions: {
-          fiber: false,
-        },
-      },
-    },
   },
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module'],
 };
