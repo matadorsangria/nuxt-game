@@ -7,8 +7,7 @@ module.exports = {
   parser: 'vue-eslint-parser',
   extends: [
     '@nuxtjs/eslint-config-typescript',
-    'plugin:nuxt/recommended',
-    'plugin:prettier/recommended',
+    'prettier',
   ],
   rules: {
     'vue/max-attributes-per-line': 'off',
@@ -20,12 +19,7 @@ module.exports = {
         },
       },
     ],
-    'prettier/prettier': [
-      'warn',
-      {
-        singleQuote: true,
-      },
-    ],
+    'import/no-named-as-default-member': 'off',
     'no-console': 'off',
   },
 };

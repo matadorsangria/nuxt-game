@@ -1,8 +1,8 @@
-import { Configuration } from '@nuxt/types';
+import { NuxtConfig } from '@nuxt/types';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
-const nuxtConfig: Configuration = {
-  mode: 'spa',
+const nuxtConfig: NuxtConfig = {
+  ssr: false,
   env: {
     FB_API_KEY: process.env.FB_API_KEY!,
     FB_AUTH_DOMAIN: process.env.FB_AUTH_DOMAIN!,
@@ -33,33 +33,10 @@ const nuxtConfig: Configuration = {
   plugins: ['~/plugins/firebase'],
   modules: ['@nuxtjs/dotenv', '@nuxtjs/vuetify'],
   build: {
-    extend(config, { isDev, isClient }) {
+    extend(config) {
       if (!config.performance) return;
       config.performance.maxAssetSize = 1200000;
       config.performance.maxEntrypointSize = 1500000;
-      if (isDev && isClient) {
-        if (config.module) {
-          config.module.rules.push({
-            enforce: 'pre',
-            test: /\.(ts|js|vue)$/,
-            loader: 'eslint-loader',
-            exclude: /(node_modules)/,
-          });
-        }
-      }
-    },
-    babel: {
-      presets({ isServer }) {
-        return [
-          [
-            require.resolve('@nuxt/babel-preset-app'),
-            {
-              buildTarget: isServer ? 'server' : 'client',
-              corejs: { version: 3 },
-            },
-          ],
-        ];
-      },
     },
   },
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module'],

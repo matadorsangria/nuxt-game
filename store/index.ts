@@ -466,7 +466,7 @@ export const mutations = {
           }
           if (target.hp > 0) {
             target.class = _class;
-            resolve();
+            resolve(null);
           } else {
             const _deadClass = _me.attackType === 'fire' ? 'burnDead' : 'dead';
             const _time = _deadClass === 'burnDead' ? 1400 : 400;
@@ -476,11 +476,11 @@ export const mutations = {
                 getPersonIndexFromId(state.people, target.id),
                 1
               );
-              resolve();
+              resolve(null);
             }, _time);
           }
         } else {
-          resolve();
+          resolve(null);
         }
       });
     }
