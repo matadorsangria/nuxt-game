@@ -1,13 +1,7 @@
-import { withInfo } from 'storybook-addon-vue-info';
 import 'firebaseui/dist/firebaseui.css';
 
 export default {
   title: 'FirebaseUI',
-  decorators: [withInfo],
-  parameters: {
-    info: {},
-    notes: 'This is not Vue Component.',
-  },
 };
 
 export const SignIn = () => ({

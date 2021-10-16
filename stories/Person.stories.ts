@@ -1,4 +1,4 @@
-import { withInfo } from 'storybook-addon-vue-info';
+import Vuex from 'vuex';
 import Person from '../components/molecules/Person.vue';
 
 const board = [
@@ -51,11 +51,6 @@ const getPerson = (character: string) => {
 
 export default {
   title: 'Person',
-  decorators: [withInfo],
-  parameters: {
-    info: {},
-    notes: 'You can see informations when you hover the character.',
-  },
 };
 
 export const Pengin = () => ({
@@ -65,6 +60,11 @@ export const Pengin = () => ({
     person: getPerson('pengin'),
     board,
     wrapStyle,
+  }),
+  store: new Vuex.Store({
+    actions: {
+      moveFocus: () => {},
+    },
   }),
 });
 
@@ -76,6 +76,11 @@ export const Enemy1 = () => ({
     board,
     wrapStyle,
   }),
+  store: new Vuex.Store({
+    actions: {
+      moveFocus: () => {},
+    },
+  }),
 });
 
 export const Enemy2 = () => ({
@@ -85,5 +90,10 @@ export const Enemy2 = () => ({
     person: getPerson('enemy2'),
     board,
     wrapStyle,
+  }),
+  store: new Vuex.Store({
+    actions: {
+      moveFocus: () => {},
+    },
   }),
 });

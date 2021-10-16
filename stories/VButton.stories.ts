@@ -1,12 +1,5 @@
-import { withInfo } from 'storybook-addon-vue-info';
-
 export default {
   title: 'VButton',
-  decorators: [withInfo],
-  parameters: {
-    info: {},
-    notes: 'This uses Vuetify.',
-  },
 };
 
 export const SignOut = () => ({

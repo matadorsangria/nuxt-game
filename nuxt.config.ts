@@ -1,4 +1,5 @@
 import { Configuration } from '@nuxt/types';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 const nuxtConfig: Configuration = {
   mode: 'spa',
@@ -62,6 +63,16 @@ const nuxtConfig: Configuration = {
     },
   },
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/composition-api/module'],
+  storybook: {
+    stories: [
+      '~/stories/**/*.stories.ts',
+    ],
+    parameters: {
+      viewport: {
+        viewports: INITIAL_VIEWPORTS,
+      }
+    },
+  }
 };
 
 module.exports = nuxtConfig;

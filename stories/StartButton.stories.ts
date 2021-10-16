@@ -1,13 +1,7 @@
-import { withInfo } from 'storybook-addon-vue-info';
 import StartButton from '../components/molecules/StartButton.vue';
 
 export default {
   title: 'StartButton',
-  decorators: [withInfo],
-  parameters: {
-    info: {},
-    notes: 'This uses Vuetify.',
-  },
 };
 
 export const Easy = () => ({

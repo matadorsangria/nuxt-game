@@ -1,14 +1,8 @@
 import Vuex from 'vuex';
-import { withInfo } from 'storybook-addon-vue-info';
 import Board from '../components/organisms/Board.vue';
 
 export default {
   title: 'Square',
-  decorators: [withInfo],
-  parameters: {
-    info: {},
-    notes: 'Square highly depends on Board.',
-  },
 };
 
 export const Default = () => ({

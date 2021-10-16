@@ -14,7 +14,7 @@
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "lintfix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
     "precommit": "yarn lint",
-    "storybook": "start-storybook -p 9001"
+    "storybook": "nuxt storybook -p 9001"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.4.10",
@@ -27,15 +27,11 @@
   "devDependencies": {
     "@nuxt/typescript-build": "^1.0.3",
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
+    "@nuxtjs/storybook": "^4.1.1",
     "@nuxtjs/vuetify": "^1.11.2",
-    "@storybook/addon-notes": "^5.3.19",
-    "@storybook/addon-storysource": "^5.3.19",
-    "@storybook/addon-viewport": "^5.3.19",
-    "@storybook/addons": "^5.3.19",
-    "@storybook/vue": "^5.3.19",
+    "@storybook/addon-notes": "^5.3.21",
     "babel-preset-vue": "^2.0.2",
     "cross-env": "^7.0.0",
-    "css-loader": "^3.6.0",
     "eslint": "^7.3.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-loader": "^4.0.2",
@@ -43,13 +39,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.0.5",
     "sass": "^1.42.1",
-    "sass-loader": "^8.0.2",
-    "storybook-addon-vue-info": "^1.4.2",
-    "style-loader": "^1.2.1",
-    "ts-loader": "^7.0.5",
+    "ts-node": "^10.3.0",
     "typescript": "^3.9.5",
-    "vue-docgen-api": "^4.25.0",
-    "vue-docgen-loader": "^1.5.0",
     "vue-loader": "^15.9.2"
   }
 }

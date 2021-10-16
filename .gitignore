@@ -19,4 +19,5 @@ dist
 .env
 
 # storybook
+.nuxt-storybook
 storybook-static
