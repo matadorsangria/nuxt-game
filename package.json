@@ -10,7 +10,7 @@
     "build:storybook": "build-storybook",
     "start": "nuxt build && nuxt start",
     "generate": "nuxt generate",
-    "check-types": "tsc",
+    "type-check": "tsc --noEmit",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "lintfix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
     "precommit": "yarn lint",
